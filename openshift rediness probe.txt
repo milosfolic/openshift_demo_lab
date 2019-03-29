@@ -1,0 +1,55 @@
+oc set probe dc/catalog --readiness --initial-delay-seconds=30 --failure-threshold=3 --get-url=http://:8080/health
+oc set probe dc/catalog --liveness --initial-delay-seconds=30 --failure-threshold=3 --get-url=http://:8080/health
+
+oc set resources dc/web --limits=cpu=400m,memory=512Mi --requests=cpu=200m,memory=256Mi
+
+oc autoscale dc/web --min 1 --max 5 --cpu-percent=40
+
+siege -c80 -d2 -t5M http://web.coolstore-05.svc.cluster.local:8080
+
+
+oc new-app postgresql-persistent --param=DATABASE_SERVICE_NAME=inventory-postgresql --param=POSTGRESQL_DATABASE=inventory --param=POSTGRESQL_USER=inventory --param=POSTGRESQL_PASSWORD=inventory --labels=app=inventory
+
+
+
+oc new-app postgresql-persistent --param=DATABASE_SERVICE_NAME=catalog-postgresql --param=POSTGRESQL_DATABASE=catalog --param=POSTGRESQL_USER=catalog --param=POSTGRESQL_PASSWORD=catalog --labels=app=catalog
+
+
+
+Jenkinsfile
+
+
+pipeline {
+  agent {
+      label 'maven'
+  }
+  stages {
+    stage('Build JAR') {
+      steps {
+        sh "mvn package"
+        stash name:"jar", includes:"target/inventory-1.0-SNAPSHOT-swarm.jar"
+      }
+    }
+    stage('Build Image') {
+      steps {
+        unstash name:"jar"
+        script {
+          openshift.withCluster() {
+            openshift.startBuild("inventory-s2i", "--from-file=target/inventory-1.0-SNAPSHOT-swarm.jar", "--wait")
+          }
+        }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        script {
+          openshift.withCluster() {
+            def dc = openshift.selector("dc", "inventory")
+            dc.rollout().latest()
+            dc.rollout().status()
+          }
+        }
+      }
+    }
+  }
+}

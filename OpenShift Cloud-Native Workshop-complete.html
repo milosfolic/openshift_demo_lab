@@ -1,0 +1,3057 @@
+<!DOCTYPE html>
+<!-- saved from url=(0098)http://guides-che-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com/workshop/cloudnative/complete -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>
+      OpenShift Cloud-Native Workshop
+  </title>
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="3NJuO9zJEdhWZYbNebE7tvq250Ks4hIo0hCTnja0HKpv1s+voXSY4GvakPjscxds5u9yb82RaCwusTJL1yvtXg==">
+  <link rel="stylesheet" media="all" href="./OpenShift Cloud-Native Workshop-complete_files/application-dcf5640dabe7c086c5db76b2e378b4def3309902bc32af61ab63094a23e1730b.css" data-turbolinks-track="reload">
+  <script src="./OpenShift Cloud-Native Workshop-complete_files/application-1763c4134299cf1911a383dd8d9b23b574b429196c500fbba1a010629fc4c558.js.download" data-turbolinks-track="reload"></script><style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style>
+</head>
+
+<body>
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid d-flex justify-content-start">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+      <a class="navbar-brand mb-0 h1" href="http://guides-che-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com/workshop/cloudnative" id="workshopName">OpenShift Cloud-Native Workshop</a>
+  </div>
+</nav>
+
+<script type="application/javascript">
+    if (App.hasOwnProperty('subscription_id')) {
+        App.cable.subscriptions.remove(App.subscription_id);
+    }
+
+    App.subscription_id = App.report_page_view('cloudnative#complete', 'beab523e-1174-4635-93d0-859b48bbda13');
+</script>
+
+<main class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+        <h2>Getting Started</h2>
+        <h2 id="getting-started-with-openshift">Getting Started with OpenShift</h2>
+
+<p>In this lab you will get familiar with the OpenShift CLI and OpenShift Web Console 
+and get ready for the Cloud Native Roadshow labs.</p>
+
+<p>For completing the following labs, you can either use your own workstation or as an 
+alternative, Eclipse Che web IDE. The advantage of your own workstation is that you use the 
+environment that you are familiar with while the advantage of Eclipse Che is that all 
+tools needed (Maven, Git, OpenShift CLI, etc ) are pre-installed in it (not on your workstation!) and all interactions 
+takes place within the browser which removes possible internet speed issues and version incompatibilities 
+on your workstation.</p>
+
+<p>The choice is yours but whatever you pick, like most things in life, stick with it for all the labs. We 
+ourselves are in love with Eclipse Che and highly recommend it.</p>
+
+<h2 id="setup-your-workspace-on-eclipse-che">Setup Your Workspace on Eclipse Che</h2>
+
+<p>Follow these instructions to setup the development environment on Eclipse Che.</p>
+
+<p>You might be familiar with the Eclipse IDE which is one of the most popular IDEs for Java and other
+programming languages. <a href="https://www.eclipse.org/che/">Eclipse Che</a> is the next-generation Eclipse IDE which is web-based
+and gives you a full-featured IDE running in the cloud. You have an Eclipse Che instance deployed on your OpenShift cluster
+which you will use during these labs.</p>
+
+<p>Go to the <a href="http://che-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com/">Eclipse Che url</a> in order to configure your development workspace: http://che-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com</p>
+
+<p>First, you need to register as a user. Register and choose the same username and password as 
+your OpenShift credentials.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-register.png" alt="Eclipse Che - Register" width="700px"></p>
+
+<p>Log into Eclipse Che with your user. You can now create your workspace based on a stack. A 
+stack is a template of workspace configuration. For example, it includes the programming language and tools needed
+in your workspace. Stacks make it possible to recreate identical workspaces with all the tools and needed configuration
+on-demand.</p>
+
+<p>For this lab, click on the <strong>Java Cloud-Native</strong> stack and then on the <strong>Create</strong> button.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-create-workspace.png" alt="Eclipse Che Workspace"></p>
+
+<p>Click on <strong>Open in IDE</strong> to open the workspace and then on the <strong>Start</strong> button to start the workspace for use, if it hasn’t started automatically.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-start-workspace.png" alt="Eclipse Che Workspace"></p>
+
+<p>You can click on the left arrow icon to switch to the wide view:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-wide.png" alt="Eclipse Che Workspace" width="600px"></p>
+
+<p>It takes a little while for the workspace to be ready. When it’s ready, you will see a fully functional 
+Eclipse Che IDE running in your browser.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-workspace.png" alt="Eclipse Che Workspace"></p>
+
+<p>Now you can import the project skeletons into your workspace.</p>
+
+<p>In the project explorer pane, click on the <strong>Import Projects…</strong> and enter the following:</p>
+
+<ul>
+  <li>Type: <code>ZIP</code></li>
+  <li>URL: <code>https://github.com/openshift-labs/cloud-native-labs/archive/ocp-3.11.zip</code></li>
+  <li>Name: <code>labs</code></li>
+  <li>Check <strong>Skip the root folder of the archive</strong></li>
+</ul>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-import.png" alt="Eclipse Che - Import Project" width="700px"></p>
+
+<p>Click on <strong>Import</strong>. Make sure you choose the <strong>Blank</strong> project configuration since the zip file contains multiple 
+project skeletons. Click on <strong>Save</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-import-save.png" alt="Eclipse Che - Import Project" width="700px"></p>
+
+<p>The projects are imported now into your workspace and is visible in the project explorer.</p>
+
+<p>Eclipse Che is a full featured IDE and provides language specific capabilities for various project types. In order to 
+enable these capabilities, let’s convert the imported project skeletons to Maven projects.</p>
+
+<p>In the project explorer, right-click on <strong>catalog-spring-boot</strong> and then click on <strong>Convert to Project</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-convert.png" alt="Eclipse Che - Convert to Project" width="600px"></p>
+
+<p>Choose <strong>Maven</strong> from the project configurations and then click on <strong>Save</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-maven.png" alt="Eclipse Che - Convert to Project" width="700px"></p>
+
+<p>Repeat the above for <strong>inventory-wildfly-swarm</strong> and <strong>gateway-vertx</strong> projects.</p>
+
+<p>Note the <strong>Terminal</strong> window in Eclipse Che. For the rest of these labs, anytime you need to run 
+a command in a terminal, you can use the Eclipse Che <strong>Terminal</strong> window.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/bootstrap-che-terminal.png" alt="Eclipse Che - Terminal"></p>
+
+<h2 id="explore-openshift-with-openshift-cli">Explore OpenShift with OpenShift CLI</h2>
+
+<p>In order to login, we will use the <code>oc</code> command and then specify the server that we
+want to authenticate to.</p>
+
+<p>Issue the following command in Eclipse Che terminal and replace <code>https://master.devoteam-1e6a.openshiftworkshop.com/</code> 
+with your OpenShift Web Console url.</p>
+
+<pre><code class="language-shell">$ oc login https://master.devoteam-1e6a.openshiftworkshop.com/
+</code></pre>
+
+<p>You may see the following output:</p>
+
+<pre><code class="language-shell">The server uses a certificate signed by an unknown authority.
+You can bypass the certificate check, but any data you send to the server could be intercepted by others.
+Use insecure connections? (y/n):
+</code></pre>
+
+<p>Enter in <code>Y</code> to use a potentially insecure connection.  The reason you received
+this message is because we are using a self-signed certificate for this
+workshop, but we did not provide you with the CA certificate that was generated
+by OpenShift. In a real-world scenario, either OpenShift’s certificate would be
+signed by a standard CA (eg: Thawte, Verisign, StartSSL, etc.) or signed by a
+corporate-standard CA that you already have installed on your system.</p>
+
+<p>Enter the username and password provided to you by the instructor</p>
+
+<p>Congratulations, you are now authenticated to the OpenShift server.</p>
+
+<p><a href="https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/projects_and_users.html#projects">Projects</a> 
+are a top level concept to help you organize your deployments. An
+OpenShift project allows a community of users (or a user) to organize and manage
+their content in isolation from other communities. Each project has its own
+resources, policies (who can or cannot perform actions), and constraints (quotas
+and limits on resources, etc). Projects act as a “wrapper” around all the
+application services and endpoints you (or your teams) are using for your work.</p>
+
+<p>For this lab, let’s create a project that you will use in the following labs for 
+deploying your applications.</p>
+
+<blockquote>
+  <p>Make sure to follow your instructor guidance on the project names in order to 
+have a unique project name for yourself e.g. appending your username to the project name</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc new-project coolstore-XX
+
+Now using project "coolstore-XX" on server ...
+...
+</code></pre>
+
+<p>OpenShift ships with a web-based console that will allow users to
+perform various tasks via a browser.  To get a feel for how the web console
+works, open your browser and go to the OpenShift Web Console.</p>
+
+<p>The first screen you will see is the authentication screen. Enter your username and password and 
+then log in. After you have authenticated to the web console, you will be presented with a
+list of projects that your user has permission to work with.</p>
+
+<p>Click on the <strong>coolstore-XX</strong> project to be taken to the project overview page
+which will list all of the routes, services, deployments, and pods that you have
+running as part of your project. There’s nothing there now, but that’s about to
+change.</p>
+
+<p>Now you are ready to get started with the labs!</p>
+
+        <hr>
+        <h2>Enterprise Microservices with WildFly Swarm</h2>
+        <h2 id="enterprise-microservices-with-wildfly-swarm">Enterprise Microservices with WildFly Swarm</h2>
+
+<p>In this lab you will learn about building microservices using WildFly Swarm.</p>
+
+<h4 id="what-is-wildfly-swarm">What is WildFly Swarm?</h4>
+
+<p>Java EE applications are traditionally created as an <code>ear</code> or <code>war</code> archive including all 
+dependencies and deployed in an application server. Multiple Java EE applications can and 
+were typically deployed in the same application server. This model is well understood in 
+development teams and has been used over the past several years.</p>
+
+<p>WildFly Swarm offers an innovative approach to packaging and running Java EE applications by 
+packaging them with just enough of the Java EE server runtime to be able to run them directly 
+on the JVM using <code>java -jar</code>. For more details on various approaches to packaging Java 
+applications, read <a href="https://developers.redhat.com/blog/2017/08/24/the-skinny-on-fat-thin-hollow-and-uber">this blog post</a>.</p>
+
+<p>WildFly Swarm is based on WildFly and it’s compatible with 
+MicroProfile, which is a community effort to standardize the subset of Java EE standards 
+such as JAX-RS, CDI and JSON-P that are useful for building microservices applications.</p>
+
+<p>Since WildFly Swarm is based on Java EE standards, it significantly simplifies refactoring 
+existing Java EE applications to microservices and allows much of the existing code-base to be 
+reused in the new services.</p>
+
+<h4 id="wildfly-swarm-maven-project">WildFly Swarm Maven Project</h4>
+
+<p>The <code>inventory-wildfly-swarm</code> project has the following structure which shows the components of 
+the WildFly Swarm project laid out in different subdirectories according to Maven best practices:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-project.png" alt="Inventory Project" width="340px"></p>
+
+<p>This is a minimal Java EE project with support for JAX-RS for building RESTful services and JPA for connecting
+to a database. <a href="https://docs.oracle.com/javaee/7/tutorial/jaxrs.htm">JAX-RS</a> is one of Java EE standards that uses Java annotations to simplify the development of RESTful web services. <a href="https://docs.oracle.com/javaee/7/tutorial/partpersist.htm">Java Persistence API (JPA)</a> is another Java EE standard that provides Java developers with an object/relational mapping facility for managing relational data in Java applications.</p>
+
+<p>This project currently contains no code other than the main class for exposing a single 
+RESTful application defined in <code>InventoryApplication</code>.</p>
+
+<p>Examine <code>com.redhat.cloudnative.inventory.InventoryApplication</code> in the <code>src/main</code> directory:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.inventory;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
+@ApplicationPath("/")
+public class InventoryApplication extends Application {
+}
+</code></pre>
+
+<p>Run the Maven build to make sure the skeleton project builds successfully. You should get a <code>BUILD SUCCESS</code> message 
+in the build logs, otherwise the build has failed.</p>
+
+<p>In Eclipse Che, click on <strong>inventory-wildfly-swarm</strong> project in the project explorer, 
+and then click on Commands Palette and click on <strong>BUILD &gt; build</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-build.png" alt="Eclipse Che - Commands Palette"></p>
+
+<p>Once built successfully, the resulting <em>jar</em> is located in the <code>target/</code> directory:</p>
+
+<pre><code class="language-shell">$ ls labs/inventory-wildfly-swarm/target/*-swarm.jar
+
+labs/inventory-wildfly-swarm/target/inventory-1.0-SNAPSHOT-swarm.jar
+</code></pre>
+
+<p>This is an uber-jar with all the dependencies required packaged in the <em>jar</em> to enable running the 
+application with <code>java -jar</code>. WildFly Swarm also creates a <em>war</em> packaging as a standard Java EE web app 
+that could be deployed to any Java EE app server (for example, JBoss EAP, or its upstream WildFly project).</p>
+
+<p>Now let’s write some code and create a domain model and a RESTful endpoint to create the Inventory service:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-arch.png" alt="Inventory RESTful Service" width="500px"></p>
+
+<h4 id="create-a-domain-model">Create a Domain Model</h4>
+
+<p>Create a new Java class named <code>Inventory</code> in <code>com.redhat.cloudnative.inventory</code> package with the below code and 
+following fields: <code>itemId</code> and <code>quantity</code></p>
+
+<p>In the project explorer in Eclipse Che, right-click on <strong>inventory-wildfly-swarm &gt; src &gt; main &gt; java &gt; com.redhat.cloudnative.inventory</strong> and then on <strong>New &gt; Java Class</strong>. Enter <code>Inventory</code> as the Java class name.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-new-class.png" alt="Eclipse Che - Create Java Class" width="700px"></p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.inventory;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "INVENTORY", uniqueConstraints = @UniqueConstraint(columnNames = "itemId"))
+public class Inventory implements Serializable {
+    @Id
+    private String itemId;
+
+    private int quantity;
+
+    public Inventory() {
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "Inventory [itemId='" + itemId + '\'' + ", quantity=" + quantity + ']';
+    }
+}
+</code></pre>
+
+<p>You don’t need to press a save button! Eclipse Che automatically saves the changes made to the files.</p>
+
+<p>Review the <code>Inventory</code> domain model and note the JPA annotations on this class. <code>@Entity</code> marks 
+the class as a JPA entity, <code>@Table</code> customizes the table creation process by defining a table 
+name and database constraint and <code>@Id</code> marks the primary key for the table.</p>
+
+<p>WildFly Swarm configuration is done to a large extent through detecting the intent of the 
+developer and automatically adding the required dependencies configurations to make sure it can 
+get out of the way and developers can be productive with their code rather than Googling for 
+configuration snippets. As an example, configuration database access with JPA is composed of 
+the following steps:</p>
+
+<ol>
+  <li>Adding the <code>org.wildfly.swarm:jpa</code> dependency to <code>pom.xml</code></li>
+  <li>Adding the database driver (e.g. <code>org.postgresql:postgresql</code>) to <code>pom.xml</code></li>
+  <li>Adding database connection details in <code>src/main/resources/project-stages.yml</code></li>
+</ol>
+
+<p>Examine <code>pom.xml</code> and note the <code>org.wildfly.swarm:jpa</code> that is already added to enable JPA:</p>
+
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.wildfly.swarm&lt;/groupId&gt;
+    &lt;artifactId&gt;jpa&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>Examine <code>src/main/resources/META-INF/persistence.xml</code> to see the JPA datasource configuration 
+for this project. Also note that the configurations uses <code>META-INF/load.sql</code> to import 
+initial data into the database.</p>
+
+<p>Examine <code>src/main/resources/project-stages.yml</code> to see the database connection details. 
+An in-memory H2 database is used in this lab for local development and in the following 
+labs will be replaced with a PostgreSQL database. Be patient! More on that later.</p>
+
+<h4 id="create-a-restful-service">Create a RESTful Service</h4>
+
+<p>WildFly Swarm uses JAX-RS standard for building REST services. In the project explorer in Eclipse Che, right-click on <strong>inventory-wildfly-swarm &gt; src &gt; main &gt; java &gt; com.redhat.cloudnative.inventory</strong> and then on <strong>New &gt; Java Class</strong></p>
+
+<p>Create a new Java class named  <code>InventoryResource</code> with the following content:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.inventory;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.*;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
+@Path("/")
+@ApplicationScoped
+public class InventoryResource {
+    @PersistenceContext(unitName = "InventoryPU")
+    private EntityManager em;
+
+    @GET
+    @Path("/api/inventory/{itemId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Inventory getAvailability(@PathParam("itemId") String itemId) {
+        Inventory inventory = em.find(Inventory.class, itemId);
+        return inventory;
+    }
+}
+</code></pre>
+
+<p>The above REST service defines an endpoint that is accessible via <code>HTTP GET</code> at 
+for example <code>/api/inventory/329299</code> with 
+the last path param being the product id which we want to check its inventory status.</p>
+
+<p>Build and package the Inventory service by clicking on the commands palette and then <strong>BUILD &gt; build</strong></p>
+
+<blockquote>
+  <p>Make sure <strong>inventory-wildfly-swarm</strong> project is highlighted in the project explorer</p>
+</blockquote>
+
+<p>Using Eclipse Che and WildFly Swarm maven plugin, you can conveniently run the application
+directly in the IDE and test it before deploying it on OpenShift.</p>
+
+<p>In Eclipse Che, click on the run icon and then on <strong>run wildfly-swarm</strong>.</p>
+
+<blockquote>
+  <p>You can also run the inventory service in Eclipse Che using the commands palette and then <strong>run &gt; run wildfly-swarm</strong></p>
+</blockquote>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-run-palette.png" alt="Run Palette" width="800px"></p>
+
+<p>Once you see <code>WildFly Swarm is Ready</code> in the logs, the Inventory service is up and running and you can access the 
+inventory REST API. Let’s test it out using <code>curl</code> in the <strong>Terminal</strong> window:</p>
+
+<pre><code class="language-shell">$ curl http://localhost:9001/api/inventory/329299
+
+{"itemId":"329299","quantity":35}
+</code></pre>
+
+<p>You can also use the preview url that Eclipse Che has generated for you to be able to test service 
+directly in the browser. Append the path <code>/api/inventory/329299</code> at the end of the preview url and try 
+it in your browser in a new tab.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-preview-url.png" alt="Preview URL" width="900px"></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-preview-browser.png" alt="Preview URL" width="900px"></p>
+
+<p>The REST API returned a JSON object representing the inventory count for this product. Congratulations!</p>
+
+<p>In Eclipse Che, stop the Inventory service by clicking on the <strong>run wildfly-swarm</strong> item in the <strong>Machines</strong> window. Then click the stop icon that appears next to <strong>run wildfly-swarm</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-run-stop.png" alt="Preview URL" width="600px"></p>
+
+<h4 id="deploy-wildfly-swarm-on-openshift">Deploy WildFly Swarm on OpenShift</h4>
+
+<p>It’s time to build and deploy our service on OpenShift.</p>
+
+<p>OpenShift <a href="https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/builds_and_image_streams.html#source-build">Source-to-Image (S2I)</a> 
+feature can be used to build a container image from your project. OpenShift 
+S2I uses the <a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift">supported OpenJDK container image</a> to build the final container image of the 
+Inventory service by uploading the WildFly Swam uber-jar from the <code>target</code> folder to 
+the OpenShift platform.</p>
+
+<p>Maven projects can use the <a href="https://maven.fabric8.io/">Fabric8 Maven Plugin</a> in order 
+to use OpenShift S2I for building 
+the container image of the application from within the project. This maven plugin is a Kubernetes/OpenShift client 
+able to communicate with the OpenShift platform using the REST endpoints in order to issue the commands 
+allowing to build a project, deploy it and finally launch a docker process as a pod.</p>
+
+<p>To build and deploy the Inventory service on OpenShift using the <code>fabric8</code> maven plugin, 
+which is already configured in Eclipse Che, from the commands palette, click on <strong>DEPLOY &gt; fabric8:deploy</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-deploy.png" alt="Fabric8 Deploy" width="340px"></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/wfswarm-inventory-che-deployed.png" alt="Inventory Deployed" width="800px"></p>
+
+<p><code>fabric8:deploy</code> will cause the following to happen:</p>
+
+<ul>
+  <li>The Inventory uber-jar is built using WildFly Swarm</li>
+  <li>A container image is built on OpenShift containing the Inventory uber-jar and JDK</li>
+  <li>All necessary objects are created within the OpenShift project to deploy the Inventory service</li>
+</ul>
+
+<p>Once this completes, your project should be up and running. OpenShift runs the different components of 
+the project in one or more pods which are the unit of runtime deployment and consists of the running 
+containers for the project.</p>
+
+<p>Let’s take a moment and review the OpenShift resources that are created for the Inventory REST API:</p>
+
+<ul>
+  <li><strong>Build Config</strong>: <code>inventory-s2i</code> build config is the configuration for building the Inventory 
+container image from the inventory source code or JAR archive</li>
+  <li><strong>Image Stream</strong>: <code>inventory</code> image stream is the virtual view of all inventory container 
+images built and pushed to the OpenShift integrated registry.</li>
+  <li><strong>Deployment Config</strong>: <code>inventory</code> deployment config deploys and redeploys the Inventory container 
+image whenever a new Inventory container image becomes available</li>
+  <li><strong>Service</strong>: <code>inventory</code> service is an internal load balancer which identifies a set of 
+pods (containers) in order to proxy the connections it receives to them. Backing pods can be 
+added to or removed from a service arbitrarily while the service remains consistently available, 
+enabling anything that depends on the service to refer to it at a consistent address (service name 
+or IP).</li>
+  <li><strong>Route</strong>: <code>inventory</code> route registers the service on the built-in external load-balancer 
+and assigns a public DNS name to it so that it can be reached from outside OpenShift cluster.</li>
+</ul>
+
+<p>You can review the above resources in the OpenShift Web Console or using <code>oc describe</code> command:</p>
+
+<blockquote>
+  <p><code>bc</code> is the short-form of <code>buildconfig</code> and can be interchangeably used 
+instead of it with the OpenShift CLI. The same goes for <code>is</code> instead 
+of <code>imagestream</code>, <code>dc</code> instead of <code>deploymentconfig</code> and <code>svc</code> instead of <code>service</code>.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc describe bc inventory-s2i
+$ oc describe is inventory
+$ oc describe dc inventory
+$ oc describe svc inventory
+$ oc describe route inventory
+</code></pre>
+
+<p>You can see the exposed DNS url for the Inventory service in the OpenShift Web Console or using 
+OpenShift CLI:</p>
+
+<pre><code class="language-shell">$ oc get routes
+
+NAME        HOST/PORT                                        PATH       SERVICES  PORT  TERMINATION   
+inventory   inventory-coolstore-XX.roadshow.openshiftapps.com   inventory  8080            None
+</code></pre>
+
+<p>Copy the route url for the Inventory service and verify the API Gateway service works using <code>curl</code>:</p>
+
+<blockquote>
+  <p>The route urls in your project would be different from the ones in this lab guide! Use the one from yor project.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://INVENTORY-ROUTE-HOST/api/inventory/329299
+
+{"itemId":"329299","quantity":35}
+</code></pre>
+
+<p>Well done! You are ready to move on to the next lab.</p>
+
+        <hr>
+        <h2>Microservices with Spring Boot</h2>
+        <h2 id="microservices-with-spring-boot">Microservices with Spring Boot</h2>
+
+<p>In this lab you will learn about Spring Boot and how you can build microservices 
+using Spring Boot and JBoss technologies. During this lab, you will create a REST API for 
+the Catalog service in order to provide a list of products for the CoolStore online shop.</p>
+
+<h4 id="what-is-spring-boot">What is Spring Boot?</h4>
+
+<p>Spring Boot is an opinionated framework that makes it easy to create stand-alone Spring based 
+applications with embedded web containers such as Tomcat (or JBoss Web Server), Jetty and Undertow 
+that you can run directly on the JVM using <code>java -jar</code>. Spring Boot also allows producing a war 
+file that can be deployed on stand-alone web containers.</p>
+
+<p>The opinionated approach means many choices about Spring platform and third-party libraries 
+are already made by Spring Boot so that you can get started with minimum effort and configuration.</p>
+
+<h4 id="spring-boot-maven-project">Spring Boot Maven Project</h4>
+
+<p>The <code>catalog-spring-boot</code> project has the following structure which shows the components of 
+the Spring Boot project laid out in different subdirectories according to Maven best practices:</p>
+
+<p>Once loaded, you should see the following files and be able to navigate amongst the files. The 
+components of the Spring Boot project are laid out in different subdirectories according to Maven best practices:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/springboot-catalog-project.png" alt="Catalog Project" width="340px"></p>
+
+<p>This is a minimal Spring Boot project with support for RESTful services and Spring Data with JPA for connecting
+to a database. This project currently contains no code other than the main class, <code>CatalogApplication</code>
+which is there to bootstrap the Spring Boot application.</p>
+
+<p>Examine <code>com/redhat/cloudnative/catalog/CatalogApplication</code> in the <code>src/main</code> directory:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.catalog;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CatalogApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(CatalogApplication.class, args);
+    }
+}
+</code></pre>
+
+<p>The database is configured using the Spring application configuration file which is located at 
+<code>src/main/resources/application.properties</code>. Examine this file to see the database connection details 
+and note that an in-memory H2 database is used in this lab for local development and will be replaced
+with a PostgreSQL database in the following labs. Be patient! More on that later.</p>
+
+<p>You can use Maven to make sure the skeleton project builds successfully. You should get a <code>BUILD SUCCESS</code> message 
+in the build logs, otherwise the build has failed.</p>
+
+<p>In Eclipse Che, click on <strong>catalog-spring-boot</strong> project in the project explorer, 
+and then click on Commands Palette and click on <strong>BUILD &gt; build</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-build.png" alt="Maven Build" width="340px"></p>
+
+<p>Once successfully built, the resulting <code>jar</code> is located in the <code>target/</code> directory:</p>
+
+<pre><code class="language-shell">$ ls labs/catalog-spring-boot/target/*.jar
+
+labs/catalog-spring-boot/target/catalog-1.0-SNAPSHOT.jar
+</code></pre>
+
+<p>This is an uber-jar with all the dependencies required packaged in the <code>jar</code> to enable running the 
+application with <code>java -jar</code>.</p>
+
+<p>Now that the project is ready, let’s get coding and create a domain model, data repository, and a<br>
+RESTful endpoint to create the Catalog service:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/springboot-catalog-arch.png" alt="Catalog RESTful Service" width="640px"></p>
+
+<h4 id="create-the-domain-model">Create the Domain Model</h4>
+
+<p>Create a new Java class named <code>Product</code> in the <code>com.redhat.cloudnative.catalog</code> package with the below code and 
+following fields: <code>itemId</code>, <code>name</code>, <code>desc</code> and <code>price</code></p>
+
+<p>In the project explorer in Eclipse Che, right-click on <strong>catalog-spring-boot &gt; src &gt; main &gt; java &gt; com.redhat.cloudnative.catalog</strong> and then on <strong>New &gt; Java Class</strong>. Enter <code>Product</code> as the Java class name.</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.catalog;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "PRODUCT", uniqueConstraints = @UniqueConstraint(columnNames = "itemId"))
+public class Product implements Serializable {
+  
+  @Id
+  private String itemId;
+  
+  private String name;
+  
+  private String description;
+  
+  private double price;
+
+  public Product() {
+  }
+  
+  public String getItemId() {
+    return itemId;
+  }
+
+  public void setItemId(String itemId) {
+    this.itemId = itemId;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public double getPrice() {
+    return price;
+  }
+
+  public void setPrice(double price) {
+    this.price = price;
+  }
+
+  @Override
+  public String toString() {
+    return "Product [itemId=" + itemId + ", name=" + name + ", price=" + price + "]";
+  }
+}
+</code></pre>
+
+<p>Review the <code>Product</code> domain model and note the JPA annotations on this class. <code>@Entity</code> marks the 
+class as a JPA entity, <code>@Table</code> customizes the table creation process by defining a table 
+name and database constraint and <code>@Id</code> marks the primary key for the table</p>
+
+<h4 id="create-a-data-repository">Create a Data Repository</h4>
+
+<p>Spring Data repository abstraction simplifies dealing with data models in Spring applications by 
+reducing the amount of boilerplate code required to implement data access layers for various 
+persistence stores. <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.core-concepts">Repository and its sub-interfaces</a> 
+are the central concept in Spring Data which is a marker interface to provide 
+data manipulation functionality for the entity class that is being managed. When the application starts, 
+Spring finds all interfaces marked as repositories and for each interface found, the infrastructure 
+configures the required persistent technologies and provides an implementation for the repository interface.</p>
+
+<p>Create a new Java interface named <code>ProductRepository</code> in <code>com.redhat.cloudnative.catalog</code> package 
+and extend <a href="https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html">CrudRepository</a> interface in order to indicate to Spring that you want to expose a 
+complete set of methods to manipulate the entity.</p>
+
+<p>In the project explorer in Eclipse Che, right-click on <strong>catalog-spring-boot &gt; src &gt; main &gt; java &gt; com.redhat.cloudnative.catalog</strong> and then on <strong>New &gt; Java Class</strong> and paste the following code:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.catalog;
+
+import org.springframework.data.repository.CrudRepository;
+
+public interface ProductRepository extends CrudRepository&lt;Product, String&gt; {
+}
+</code></pre>
+
+<p>That’s it! Now that you have a domain model and a repository to retrieve the domain model, let’s create a 
+RESTful service that returns the list of products.</p>
+
+<h4 id="create-a-restful-service">Create a RESTful Service</h4>
+
+<p>Spring Boot uses Spring Web MVC as the default RESTful stack in Spring applications. Create 
+a new Java class named <code>CatalogController</code> in <code>com.redhat.cloudnative.catalog</code> package with 
+the following content by right-clicking on <strong>catalog-spring-boot &gt; src &gt; main &gt; java &gt; com.redhat.cloudnative.catalog</strong> and 
+then clicking on <strong>New &gt; Java Class</strong>:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.catalog;
+
+import java.util.*;
+import java.util.stream.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping(value = "/api/catalog")
+public class CatalogController {
+    @Autowired
+    private ProductRepository repository;
+
+    @ResponseBody
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List&lt;Product&gt; getAll() {
+        Spliterator&lt;Product&gt; products = repository.findAll().spliterator();
+        return StreamSupport.stream(products, false).collect(Collectors.toList());
+    }
+}
+</code></pre>
+
+<p>The above REST service defines an endpoint that is accessible via <code>HTTP GET</code> at <code>/api/catalog</code>. Notice 
+the <code>repository</code> field on the controller class which is used to retrieve the list of products. Spring Boot 
+automatically provides an implementation for <code>ProductRepository</code> at runtime and 
+<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-spring-beans-and-dependency-injection.html">injects it into the controller using the <code>@Autowire</code> annotation</a>.</p>
+
+<p>Build and package the Catalog service using Maven by clicking on <strong>BUILD &gt; build</strong> from the commands palette.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-build.png" alt="Maven Build" width="340px"></p>
+
+<p>Using Spring Boot maven plugin, you can conveniently run the application in Eclipse Che and 
+test the endpoint. In Eclipse Che, click on the run icon and then on <strong>run spring-boot</strong>.</p>
+
+<blockquote>
+  <p>You can also run the inventory service in Eclipse Che using the commands palette and then <strong>run &gt; run spring-boot</strong></p>
+</blockquote>
+
+<p>When you see <code>Started CatalogApplication</code> in the logs, you can access the 
+Catalog REST API. Let’s test it out using <code>curl</code> in a new terminal window:</p>
+
+<pre><code class="language-shell">$ curl http://localhost:9000/api/catalog
+
+[{"itemId":"329299","name":"Red Fedora","desc":"Official Red Hat Fedora","price":34.99},...]
+</code></pre>
+
+<p>You can also use the preview url that Eclipse Che has generated for you to be able to test service 
+directly in the browser. Append the path <code>/api/catalog</code> at the end of the preview url and try 
+it in your browser in a new tab.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/springboot-che-preview-browser.png" alt="Preview URL" width="900px"></p>
+
+<p>The REST API returned a JSON object representing the product list. Congratulations!</p>
+
+<p>Stop the Inventory service by clicking on the stop icon near <strong>run spring-boot</strong> in the <strong>Machines</strong> window.</p>
+
+<h4 id="deploy-spring-boot-on-openshift">Deploy Spring Boot on OpenShift</h4>
+
+<p>It’s time to build and deploy our service on OpenShift.</p>
+
+<p>OpenShift <a href="https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/builds_and_image_streams.html#source-build">Source-to-Image (S2I)</a> 
+feature can be used to build a container image from your project. OpenShift 
+S2I uses the <a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift">supported OpenJDK container image</a> to build the final container image 
+of the Catalog service by uploading the Spring Boot uber-jar from the <code>target</code> 
+folder to the OpenShift platform.</p>
+
+<p>Maven projects can use the <a href="https://maven.fabric8.io/">Fabric8 Maven Plugin</a> in order to use OpenShift S2I for building 
+the container image of the application from within the project. This maven plugin is a Kubernetes/OpenShift client 
+able to communicate with the OpenShift platform using the REST endpoints in order to issue the commands 
+allowing to build a project, deploy it and finally launch a docker process as a pod.</p>
+
+<p>To build and deploy the Catalog service on OpenShift using the <code>fabric8</code> maven plugin, 
+which is already configured in Eclipse Che, from the commands palette, click on <strong>DEPLOY &gt; fabric8:deploy</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-deploy.png" alt="Fabric8 Deploy" width="340px"></p>
+
+<p><code>fabric8:deploy</code> will cause the following to happen:</p>
+
+<ul>
+  <li>The Catalog uber-jar is built using Spring Boot</li>
+  <li>A container image is built on OpenShift containing the Catalog uber-jar and JDK</li>
+  <li>All necessary objects are created within the OpenShift project to deploy the Catalog service</li>
+</ul>
+
+<p>Once this completes, your project should be up and running. OpenShift runs the different components of 
+the project in one or more pods which are the unit of runtime deployment and consists of the running 
+containers for the project.</p>
+
+<p>Let’s take a moment and review the OpenShift resources that are created for the Catalog REST API:</p>
+
+<ul>
+  <li><strong>Build Config</strong>: <code>catalog-s2i</code> build config is the configuration for building the Catalog 
+container image from the catalog source code or JAR archive</li>
+  <li><strong>Image Stream</strong>: <code>catalog</code> image stream is the virtual view of all catalog container 
+images built and pushed to the OpenShift integrated registry.</li>
+  <li><strong>Deployment Config</strong>: <code>catalog</code> deployment config deploys and redeploys the Catalog container 
+image whenever a new Catalog container image becomes available</li>
+  <li><strong>Service</strong>: <code>catalog</code> service is an internal load balancer which identifies a set of 
+pods (containers) in order to proxy the connections it receives to them. Backing pods can be 
+added to or removed from a service arbitrarily while the service remains consistently available, 
+enabling anything that depends on the service to refer to it at a consistent address (service name 
+or IP).</li>
+  <li><strong>Route</strong>: <code>catalog</code> route registers the service on the built-in external load-balancer 
+and assigns a public DNS name to it so that it can be reached from outside OpenShift cluster.</li>
+</ul>
+
+<p>You can review the above resources in the OpenShift Web Console or using <code>oc describe</code> command:</p>
+
+<blockquote>
+  <p><code>bc</code> is the short-form of <code>buildconfig</code> and can be interchangeably used instead of it with the 
+OpenShift CLI. The same goes for <code>is</code> instead of <code>imagestream</code>, <code>dc</code> instead of<code>deploymentconfig</code> 
+and <code>svc</code> instead of <code>service</code>.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc describe bc catalog-s2i
+$ oc describe is catalog
+$ oc describe dc catalog
+$ oc describe svc catalog
+$ oc describe route catalog
+</code></pre>
+
+<p>You can see the exposed DNS url for the Catalog service in the OpenShift Web Console or using 
+OpenShift CLI:</p>
+
+<pre><code class="language-shell">$ oc get routes
+
+NAME        HOST/PORT                                        PATH       SERVICES  PORT  TERMINATION   
+catalog     catalog-coolstore-XX.roadshow.openshiftapps.com     catalog    8080            None
+inventory   inventory-coolstore-XX.roadshow.openshiftapps.com   inventory  8080            None
+</code></pre>
+
+<p>Copy the route url for the Catalog service and verify the Catalog service works using <code>curl</code>:</p>
+
+<blockquote>
+  <p>The route urls in your project would be different from the ones in this lab guide! Use the ones from yor project.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://CATALOG-ROUTE-HOST/api/catalog
+
+[{"itemId":"329299","name":"Red Fedora","desc":"Official Red Hat Fedora","price":34.99},...]
+</code></pre>
+
+<p>Well done! You are ready to move on to the next lab.</p>
+
+        <hr>
+        <h2>Reactive Microservices with Eclipse Vert.x</h2>
+        <h2 id="reactive-microservices-with-eclipse-vertx">Reactive Microservices with Eclipse Vert.x</h2>
+
+<p>In this lab you will learn about Eclipse Vert.x and how you can 
+build microservices using reactive principles. During this lab you will 
+create a scalable API Gateway that aggregates Catalog and Inventory APIs.</p>
+
+<h4 id="what-is-eclipse-vertx">What is Eclipse Vert.x?</h4>
+
+<p><a href="http://vertx.io/">Eclipse Vert.x</a> is a toolkit for building reactive applications on the Java Virtual Machine (JVM). Vert.x does not 
+impose a specific framework or packaging model and can be used within your existing applications and frameworks 
+in order to add reactive functionality by just adding the Vert.x jar files to the application classpath.</p>
+
+<p>Vert.x enables building reactive systems as defined by <a href="http://www.reactivemanifesto.org/">The Reactive Manifesto</a> and build 
+services that are:</p>
+
+<ul>
+  <li><em>Responsive</em>: to handle requests in a reasonable time</li>
+  <li><em>Resilient</em>: to stay responsive in the face of failures</li>
+  <li><em>Elastic</em>: to stay responsive under various loads and be able to scale up and down</li>
+  <li><em>Message driven</em>: components interact using asynchronous message-passing</li>
+</ul>
+
+<p>Vert.x is designed to be event-driven and non-blocking. Events are delivered in an event loop that must never be blocked. Unlike traditional applications, Vert.x uses a very small number of threads responsible for dispatching the events to event handlers. If the event loop is blocked, the events won’t be delivered anymore and therefore the code needs to be mindful of this execution model.</p>
+
+<h4 id="vertx-maven-project">Vert.x Maven Project</h4>
+
+<p>The <code>gateway-vertx</code> project has the following structure which shows the components of 
+the Vert.x project laid out in different subdirectories according to Maven best practices:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/vertx-gateway-project.png" alt="Gateway Project" width="340px"></p>
+
+<p>This is a minimal Vert.x project with support for RESTful services. This project currently contains no code
+other than the main class, <code>GatewayVerticle.java</code> which is there to bootstrap the Vert.x application. Verticles
+are encapsulated parts of the application that can run completely independently and communicate with each other
+via the built-in event bus in Vert.x. Verticles get deployed and run by Vert.x in an event loop and therefore it 
+is important that the code in a Verticle does not block. This asynchronous architecture allows Vert.x applications 
+to easily scale and handle large amounts of throughput with few threads.All API calls in Vert.x by default are non-blocking 
+and support this concurrency model.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/vertx-event-loop.png" alt="Vert.x Event Loop" width="600px"></p>
+
+<p>Although you can have multiple, there is currently only one Verticle created in the <code>gateway-vertx</code> project.</p>
+
+<p>Examine <code>GatewayVerticle</code> class in the <code>com.redhat.cloudnative.gateway</code> package in the <code>src</code> directory.</p>
+
+<pre><code class="language-java">import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
+import io.vertx.ext.web.Router;
+
+public class GatewayVerticle extends AbstractVerticle {
+    @Override
+    public void start(Future&lt;Void&gt; future) {
+        Router router = Router.router(vertx);
+
+        router.get("/*").handler(rc -&gt; {
+            rc.response().end("{\"message\": \"Hello World\"}");
+        });
+
+        vertx.createHttpServer().requestHandler(router::accept)
+            .listen(Integer.getInteger("http.port", 8080));
+    }
+}
+</code></pre>
+
+<p>Here is what happens in the above code:</p>
+
+<ol>
+  <li>A Verticle is created by extending from <code>AbstractVerticle</code> class</li>
+  <li><code>Router</code> is retrieved for mapping the REST endpoints</li>
+  <li>A REST endpoint is created for <code>/*</code> to return a static JSON response <code>{"message": "Hello World"}</code></li>
+  <li>An HTTP Server is created which listens on port 8080</li>
+</ol>
+
+<p>You can use Maven to make sure the skeleton project builds successfully. You should get a <code>BUILD SUCCESS</code> message 
+in the build logs, otherwise the build has failed.</p>
+
+<p>In Eclipse Che, click on <strong>gateway-vertx</strong> project in the project explorer, 
+and then click on Commands Palette and click on <strong>BUILD &gt; build</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-build.png" alt="Maven Build" width="340px"></p>
+
+<p>Once successfully built, the resulting <code>jar</code> is located in the <code>target/</code> directory:</p>
+
+<pre><code class="language-shell">$ ls labs/gateway-vertx/target/*.jar
+
+labs/gateway-vertx/target/gateway-1.0-SNAPSHOT.jar
+</code></pre>
+
+<p>This is an uber-jar with all the dependencies required packaged in the <em>jar</em> to enable running the 
+application with <code>java -jar</code>.</p>
+
+<h4 id="create-an-api-gateway">Create an API Gateway</h4>
+
+<p>In the previous labs, you have created two RESTful services: Catalog and Inventory. Instead of the 
+web frontend contacting each of these backend services, you can create an API Gateway which is an entry 
+point for for the web frontend to access all backend services from a single place. This pattern is expectedly 
+called <a href="http://microservices.io/patterns/apigateway.html">API Gateway</a> and is a common practice in Microservices 
+architecture.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/coolstore-arch.png" alt="API Gateway Pattern" width="400px"></p>
+
+<p>Replace the content of <code>src/main/java/com/redhat/cloudnative/gateway/GatewayVerticle.java</code> class with the following:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.gateway;
+
+import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClientOptions;
+import io.vertx.rxjava.core.AbstractVerticle;
+import io.vertx.rxjava.ext.web.Router;
+import io.vertx.rxjava.ext.web.RoutingContext;
+import io.vertx.rxjava.ext.web.client.WebClient;
+import io.vertx.rxjava.ext.web.codec.BodyCodec;
+import io.vertx.rxjava.ext.web.handler.CorsHandler;
+import io.vertx.rxjava.servicediscovery.ServiceDiscovery;
+import io.vertx.rxjava.servicediscovery.types.HttpEndpoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rx.Observable;
+import rx.Single;
+
+public class GatewayVerticle extends AbstractVerticle {
+    private static final Logger LOG = LoggerFactory.getLogger(GatewayVerticle.class);
+
+    private WebClient catalog;
+    private WebClient inventory;
+
+    @Override
+    public void start() {
+        Router router = Router.router(vertx);
+        router.route().handler(CorsHandler.create("*").allowedMethod(HttpMethod.GET));
+        router.get("/health").handler(ctx -&gt; ctx.response().end(new JsonObject().put("status", "UP").toString()));
+        router.get("/api/products").handler(this::products);
+
+        ServiceDiscovery.create(vertx, discovery -&gt; {
+            // Catalog lookup
+            Single&lt;WebClient&gt; catalogDiscoveryRequest = HttpEndpoint.rxGetWebClient(discovery,
+                    rec -&gt; rec.getName().equals("catalog"))
+                    .onErrorReturn(t -&gt; WebClient.create(vertx, new WebClientOptions()
+                            .setDefaultHost(System.getProperty("catalog.api.host", "localhost"))
+                            .setDefaultPort(Integer.getInteger("catalog.api.port", 9000))));
+
+            // Inventory lookup
+            Single&lt;WebClient&gt; inventoryDiscoveryRequest = HttpEndpoint.rxGetWebClient(discovery,
+                    rec -&gt; rec.getName().equals("inventory"))
+                    .onErrorReturn(t -&gt; WebClient.create(vertx, new WebClientOptions()
+                            .setDefaultHost(System.getProperty("inventory.api.host", "localhost"))
+                            .setDefaultPort(Integer.getInteger("inventory.api.port", 9001))));
+
+            // Zip all 3 requests
+            Single.zip(catalogDiscoveryRequest, inventoryDiscoveryRequest, (c, i) -&gt; {
+                // When everything is done
+                catalog = c;
+                inventory = i;
+                return vertx.createHttpServer()
+                    .requestHandler(router::accept)
+                    .listen(Integer.getInteger("http.port", 8080));
+            }).subscribe();
+        });
+    }
+
+    private void products(RoutingContext rc) {
+        // Retrieve catalog
+        catalog.get("/api/catalog").as(BodyCodec.jsonArray()).rxSend()
+            .map(resp -&gt; {
+                if (resp.statusCode() != 200) {
+                    new RuntimeException("Invalid response from the catalog: " + resp.statusCode());
+                }
+                return resp.body();
+            })
+            .flatMap(products -&gt;
+                // For each item from the catalog, invoke the inventory service
+                Observable.from(products)
+                    .cast(JsonObject.class)
+                    .flatMapSingle(product -&gt;
+                        inventory.get("/api/inventory/" + product.getString("itemId")).as(BodyCodec.jsonObject())
+                            .rxSend()
+                            .map(resp -&gt; {
+                                if (resp.statusCode() != 200) {
+                                    LOG.warn("Inventory error for {}: status code {}",
+                                            product.getString("itemId"), resp.statusCode());
+                                    return product.copy();
+                                }
+                                return product.copy().put("availability", 
+                                    new JsonObject().put("quantity", resp.body().getInteger("quantity")));
+                            }))
+                    .toList().toSingle()
+            )
+            .subscribe(
+                list -&gt; rc.response().end(Json.encodePrettily(list)),
+                error -&gt; rc.response().end(new JsonObject().put("error", error.getMessage()).toString())
+            );
+    }
+}
+</code></pre>
+
+<p>Let’s break down what happens in the above code. The <code>start</code> method creates an HTTP 
+server and a REST mapping to map <code>/api/products</code> to the <code>products</code> Java 
+method.</p>
+
+<p>Vert.x provides <a href="http://vertx.io/docs/vertx-service-discovery/java">built-in service discovery</a> 
+for finding where dependent services are deployed 
+and accessing their endpoints. Vert.x service discovery can be seamlessly integrated with external 
+service discovery mechanisms provided by OpenShift, Kubernetes, Consul, Redis, etc.</p>
+
+<p>In this lab, since you will deploy the API Gateway on OpenShift, the OpenShift service discovery 
+bridge is used to automatically import OpenShift services into the Vert.x application as they 
+get deployed and undeployed. Since you also want to test the API Gateway locally, there is an 
+<code>onErrorReturn()</code> clause in the service lookup to fallback on a local service for Inventory 
+and Catalog REST APIs.</p>
+
+<pre><code class="language-java">public void start() {
+    Router router = Router.router(vertx);
+    router.route().handler(CorsHandler.create("*").allowedMethod(HttpMethod.GET));
+    router.get("/health").handler(ctx -&gt; ctx.response().end(new JsonObject().put("status", "UP").toString()));
+    router.get("/api/products").handler(this::products);
+
+    ServiceDiscovery.create(vertx, discovery -&gt; {
+        // Catalog lookup
+        Single&lt;WebClient&gt; catalogDiscoveryRequest = HttpEndpoint.rxGetWebClient(discovery,
+                rec -&gt; rec.getName().equals("catalog"))
+                .onErrorReturn(t -&gt; WebClient.create(vertx, new WebClientOptions()
+                        .setDefaultHost(System.getProperty("catalog.api.host", "localhost"))
+                        .setDefaultPort(Integer.getInteger("catalog.api.port", 9000))));
+
+        // Inventory lookup
+        Single&lt;WebClient&gt; inventoryDiscoveryRequest = HttpEndpoint.rxGetWebClient(discovery,
+                rec -&gt; rec.getName().equals("inventory"))
+                .onErrorReturn(t -&gt; WebClient.create(vertx, new WebClientOptions()
+                        .setDefaultHost(System.getProperty("inventory.api.host", "localhost"))
+                        .setDefaultPort(Integer.getInteger("inventory.api.port", 9001))));
+
+        // Zip all 3 requests
+        Single.zip(catalogDiscoveryRequest, inventoryDiscoveryRequest, (c, i) -&gt; {
+            // When everything is done
+            catalog = c;
+            inventory = i;
+            return vertx.createHttpServer()
+                .requestHandler(router::accept)
+                .listen(Integer.getInteger("http.port", 8080));
+        }).subscribe();
+    });
+}
+</code></pre>
+
+<p>The <code>products</code> method invokes the Catalog REST endpoint and retrieves the products. It then 
+iterates over the retrieved products and for each product invokes the 
+Inventory REST endpoint to get the inventory status and enrich the product data with availability 
+info.</p>
+
+<p>Note that instead of making blocking calls to the Catalog and Inventory REST APIs, all calls 
+are non-blocking and handled using <a href="http://vertx.io/docs/vertx-rx/java">RxJava</a>. Due to its non-blocking 
+nature, the <code>product</code> method can immediately return without waiting for the Catalog and Inventory 
+REST invocations to complete and whenever the result of the REST calls is ready, the result 
+will be acted upon and update the response which is then sent back to the client.</p>
+
+<pre><code class="language-java">private void products(RoutingContext rc) {
+    // Retrieve catalog
+    catalog.get("/api/catalog").as(BodyCodec.jsonArray()).rxSend()
+        .map(resp -&gt; {
+            if (resp.statusCode() != 200) {
+                new RuntimeException("Invalid response from the catalog: " + resp.statusCode());
+            }
+            return resp.body();
+        })
+        .flatMap(products -&gt;
+            // For each item from the catalog, invoke the inventory service
+            Observable.from(products)
+                .cast(JsonObject.class)
+                .flatMapSingle(product -&gt;
+                    inventory.get("/api/inventory/" + product.getString("itemId")).as(BodyCodec.jsonObject())
+                        .rxSend()
+                        .map(resp -&gt; {
+                            if (resp.statusCode() != 200) {
+                                LOG.warn("Inventory error for {}: status code {}",
+                                        product.getString("itemId"), resp.statusCode());
+                                return product.copy();
+                            }
+                            return product.copy().put("availability", 
+                                new JsonObject().put("quantity", resp.body().getInteger("quantity")));
+                        }))
+                .toList().toSingle()
+        )
+        .subscribe(
+            list -&gt; rc.response().end(Json.encodePrettily(list)),
+            error -&gt; rc.response().end(new JsonObject().put("error", error.getMessage()).toString())
+        );
+}
+</code></pre>
+
+<p>Build and package the Gateway service using Maven by clicking on <strong>BUILD &gt; build</strong> from the commands palette.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-build.png" alt="Maven Build" width="340px"></p>
+
+<!---
+
+Since the API Gateway requires the Catalog and Inventory services to be running, let's run all three 
+services simultaneously and verify that the API Gateway works as expected. 
+
+In the project explorer, click on the **catalog-spring-boot** project and then from the run commands, click 
+on **run spring-boot**.
+
+> Make sure you first click on the **catalog-spring-boot** in the project explorer
+
+![Run Catalog](/workshop/cloudnative/asset/images/vertx-run-commands.png){:width="800px"}
+
+Then click on **inventory-wildfly-swarm** project in the project explorer, open the run commands then click on 
+**run wildfly-swarm**.
+
+> Make sure you first click on the **inventory-wildfly-swarm** in the project explorer!
+
+Now that Catalog and Inventory services are up and running, start the API Gateway service by clicking on the 
+**gateway-vertx** project in the project explorer and then run **run vertx** from the run palette.
+
+Now you can test the API Gateway by hitting the `/api/products` endpoint using `curl`:
+
+~~~shell
+$ curl http://localhost:8080/api/products
+
+[ {
+  "itemId" : "329299",
+  "name" : "Red Fedora",
+  "desc" : "Official Red Hat Fedora",
+  "price" : 34.99,
+  "availability" : {
+    "quantity" : 35
+  }
+},
+...
+]
+~~~
+
+Note that the JSON response aggregates responses from Catalog and Inventory services and 
+the inventory info for each product is available within the same JSON object.
+
+You can also use the preview url that Eclipse Che has generated for you to be able to test service 
+directly in the browser. Append the path `/api/products` at the end of the preview url and try 
+it in your browser in a new tab.
+
+![Preview URL](/workshop/cloudnative/asset/images/vertx-preview-browser.png){:width="900px"}
+
+Stop the Inventory service by clicking on the stop icon near **run spring-boot**, **run wildfly-swarm** and 
+**run vertx** in the **Machines** window.
+
+-->
+
+<h4 id="deploy-vertx-on-openshift">Deploy Vert.x on OpenShift</h4>
+
+<p>It’s time to build and deploy our service on OpenShift.</p>
+
+<p>Like discussed, Vert.x service discovery integrates into OpenShift service discovery via OpenShift 
+REST API and imports available services to make them available to the Vert.x application. Security 
+in OpenShift comes first and therefore accessing the OpenShift REST API requires the user or the 
+system (Vert.x in this case) to have sufficient permissions to do so. All containers in 
+OpenShift run with a <code>serviceaccount</code> (by default, the project <code>default</code> service account) which can 
+be used to grant permissions for operations like accessing the OpenShift REST API. You can read 
+more about service accounts in the <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/service_accounts.html">OpenShift Documentation</a> and this 
+<a href="https://blog.openshift.com/understanding-service-accounts-sccs/#_service_accounts">blog post</a></p>
+
+<p>Grant permission to the API Gateway to be able to access OpenShift REST API and discover services.</p>
+
+<blockquote>
+  <p>Make sure to replace the project name with your own unique project name</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc policy add-role-to-user view -n coolstore-XX -z default
+</code></pre>
+
+<p>OpenShift <a href="https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/builds_and_image_streams.html#source-build">Source-to-Image (S2I)</a> 
+feature can be used to build a container image from your project. OpenShift 
+S2I uses the <a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift">supported OpenJDK container image</a> to build the final container 
+image of the API Gateway service by uploading the Vert.x uber-jar from 
+the <code>target</code> folder to the OpenShift platform.</p>
+
+<p>Maven projects can use the <a href="https://maven.fabric8.io/">Fabric8 Maven Plugin</a> in order to use OpenShift S2I for building 
+the container image of the application from within the project. This maven plugin is a Kubernetes/OpenShift client 
+able to communicate with the OpenShift platform using the REST endpoints in order to issue the commands 
+allowing to build a project, deploy it and finally launch a docker process as a pod.</p>
+
+<p>To build and deploy the Gateway service on OpenShift using the <code>fabric8</code> maven plugin, 
+which is already configured in Eclipse Che, from the commands palette, click on <strong>DEPLOY &gt; fabric8:deploy</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-deploy.png" alt="Fabric8 Deploy" width="340px"></p>
+
+<p><code>fabric8:deploy</code> will cause the following to happen:</p>
+
+<ul>
+  <li>The API Gateway uber-jar is built using Vert.x</li>
+  <li>A container image is built on OpenShift containing the API Gateway uber-jar and JDK</li>
+  <li>All necessary objects are created within the OpenShift project to deploy the API Gateway service</li>
+</ul>
+
+<p>Once this completes, your project should be up and running. OpenShift runs the different components of 
+the project in one or more pods which are the unit of runtime deployment and consists of the running 
+containers for the project.</p>
+
+<p>Let’s take a moment and review the OpenShift resources that are created for the API Gateway:</p>
+
+<ul>
+  <li><strong>Build Config</strong>: <code>gateway-s2i</code> build config is the configuration for building the Gateway 
+container image from the gateway source code or JAR archive</li>
+  <li><strong>Image Stream</strong>: <code>gateway</code> image stream is the virtual view of all gateway container 
+images built and pushed to the OpenShift integrated registry.</li>
+  <li><strong>Deployment Config</strong>: <code>gateway</code> deployment config deploys and redeploys the Gateway container 
+image whenever a new Gateway container image becomes available</li>
+  <li><strong>Service</strong>: <code>gateway</code> service is an internal load balancer which identifies a set of 
+pods (containers) in order to proxy the connections it receives to them. Backing pods can be 
+added to or removed from a service arbitrarily while the service remains consistently available, 
+enabling anything that depends on the service to refer to it at a consistent address (service name 
+or IP).</li>
+  <li><strong>Route</strong>: <code>gateway</code> route registers the service on the built-in external load-balancer 
+and assigns a public DNS name to it so that it can be reached from outside OpenShift cluster.</li>
+</ul>
+
+<p>You can review the above resources in the OpenShift Web Console or using <code>oc describe</code> command:</p>
+
+<blockquote>
+  <p><code>bc</code> is the short-form of <code>buildconfig</code> and can be interchangeably used instead of it with the
+OpenShift CLI. The same goes for <code>is</code> instead of <code>imagestream</code>, <code>dc</code> instead of<code>deploymentconfig</code> 
+and <code>svc</code> instead of <code>service</code>.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc describe bc gateway-s2i
+$ oc describe is gateway
+$ oc describe dc gateway
+$ oc describe svc gateway
+$ oc describe route gateway
+</code></pre>
+
+<p>You can see the expose DNS url for the Gateway service in the OpenShift Web Console or using 
+OpenShift CLI.</p>
+
+<pre><code class="language-shell">$ oc get routes
+
+NAME        HOST/PORT                                                  PATH      SERVICES    PORT       TERMINATION   
+catalog     catalog-coolstore-XX.roadshow.openshiftapps.com               catalog     8080                     None
+inventory   inventory-coolstore-XX.roadshow.openshiftapps.com             inventory   8080                     None
+gateway     gateway-coolstore-XX.roadshow.openshiftapps.com               gateway     8080                     None
+</code></pre>
+
+<p>Copy the route url for API Gateway and verify the API Gateway service works using <code>curl</code>:</p>
+
+<blockquote>
+  <p>The route urls in your project would be different from the ones in this lab guide! Use the ones from yor project.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://API-GATEWAY-ROUTE-HOST/api/products
+
+[ {
+  "itemId" : "329299",
+  "name" : "Red Fedora",
+  "desc" : "Official Red Hat Fedora",
+  "price" : 34.99,
+  "availability" : {
+    "quantity" : 35
+  }
+},
+...
+]
+</code></pre>
+
+<p>As mentioned earlier, Vert.x built-in service discovery is integrated with OpenShift service 
+discovery to lookup the Catalog and Inventory APIs.</p>
+
+<p>Well done! You are ready to move on to the next lab.</p>
+
+        <hr>
+        <h2>Web UI with Node.js and AngularJS</h2>
+        <h2 id="web-ui-with-nodejs-and-angularjs">Web UI with Node.js and AngularJS</h2>
+
+<p>In this lab you will learn about Node.js and will deploy the Node.js and Angular-based 
+web frontend for the CoolStore online shop which uses the API Gateway services you deployed 
+in previous labs.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/coolstore-arch.png" alt="API Gateway Pattern" width="400px"></p>
+
+<h4 id="what-is-nodejs">What is Node.js?</h4>
+
+<p>Node.js is an open source, cross-platform runtime environment for developing server-side 
+applications using JavaScript. Node.js has an event-driven architecture capable of 
+non-blocking I/O. These design choices aim to optimize throughput and scalability in 
+Web applications with many input/output operations, as well as for real-time web applications.</p>
+
+<p>Node.js non-blocking architecture allows applications to process large number of 
+requests (tens of thousands) using a single thread which makes it desirable choice for building 
+scalable web applications.</p>
+
+<h4 id="deploy-web-ui-on-openshift">Deploy Web UI on OpenShift</h4>
+
+<p>The Web UI is built using Node.js for server-side JavaScript and AngularJS for client-side 
+JavaScript. Let’s deploy it on OpenShift using the certified Node.js container image available 
+in OpenShift.</p>
+
+<p>In the previous labs, you used the OpenShift 
+<a href="https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/builds_and_image_streams.html#source-build">Source-to-Image (S2I)</a> 
+feature via the <a href="https://maven.fabric8.io/">Fabric8 Maven Plugin</a> to build a container image from the 
+source code on your laptop. In this lab, you will still use S2I but instead instruct OpenShift 
+to obtain the application code directly from the source repository and build and deploy a 
+container image of it.</p>
+
+<p>The source code for the the Node.js Web front-end is available in this Git repository:</p>
+
+<p><a href="https://github.com/openshift-labs/cloud-native-labs/tree/ocp-3.11/web-nodejs">https://github.com/openshift-labs/cloud-native-labs/tree/ocp-3.11/web-nodejs</a></p>
+
+<p>Use the OpenShift CLI command to create a new build and deployment for the Web component:</p>
+
+<blockquote>
+  <p>Feeling adventurous? Build and deploy the Web front-end via the OpenShift Web Console 
+instead. To give you a hint, start by clicking on <strong>Add to project</strong> within the 
+<strong>coolstore-XX</strong> project and pick <strong>JavaScript</strong> and then <strong>Node.js</strong> in the service 
+catalog. Don’t forget to click on <strong>advanced options</strong> and set <strong>Context Dir</strong> to <code>web-nodejs</code> 
+which is the sub-folder of the Git repository where the source code for Web resides.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc new-app nodejs:8~https://github.com/openshift-labs/cloud-native-labs.git#ocp-3.11 \
+        --context-dir=web-nodejs \
+        --name=web 
+</code></pre>
+
+<p>The <code>--context-dir</code> option specifies the sub-directly of the Git repository which contains 
+the source code for the application to be built and deployed. The <code>--labels</code> allows 
+assigning arbitrary key-value labels to the application objects in order to make it easier to 
+find them later on when you have many applications in the same project.</p>
+
+<p>A build gets created and starts building the Node.js Web UI container image. You can see the build 
+logs using OpenShift Web Console or OpenShift CLI:</p>
+
+<pre><code class="language-shell">$ oc logs -f bc/web
+</code></pre>
+
+<p>The <code>-f</code> option is to follow the logs as the build progresses. After the building the Node.js Web UI 
+completes, it gets pushed into the internal image registry in OpenShift and then deployed within 
+your project.</p>
+
+<p>In order to access the Web UI from outside (e.g. from a browser), it needs to get added to the load 
+balancer. Run the following command to add the Web UI service to the built-in HAProxy load balancer 
+in OpenShift.</p>
+
+<pre><code class="language-shell">$ oc expose svc/web
+$ oc get route web
+</code></pre>
+
+<p>Point your browser at the Web UI route url. You should be able to see the CoolStore with all 
+products and their inventory status.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/coolstore-web.png" alt="CoolStore Shop" width="840px"></p>
+
+<p>Well done! You are ready to move on to the next lab.</p>
+
+        <hr>
+        <h2>Monitoring Application Health</h2>
+        <h2 id="monitoring-application-health">Monitoring Application Health</h2>
+
+<p>In this lab we will learn how to monitor application health using OpenShift 
+health probes and how you can see container resource consumption using metrics.</p>
+
+<h4 id="health-probes">Health Probes</h4>
+
+<p>When building microservices, monitoring becomes of extreme importance to make sure all services 
+are running at all times, and when they don’t there are automatic actions triggered to rectify 
+the issues.</p>
+
+<p>OpenShift, using Kubernetes health probes, offers a solution for monitoring application 
+health and trying to automatically heal faulty containers through restarting them to fix issues such as
+a deadlock in the application which can be resolved by restarting the container. Restarting a container 
+in such a state can help to make the application more available despite bugs.</p>
+
+<p>Furthermore, there are of course a category of issues that can’t be resolved by restarting the container. 
+In those scenarios, OpenShift would remove the faulty container from the built-in load-balancer and send traffic 
+only to the healthy containers that remain.</p>
+
+<p>There are two types of health probes available in OpenShift: <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/application_health.html#container-health-checks-using-probes">liveness probes and readiness probes</a>. 
+<em>Liveness probes</em> are to know when to restart a container and <em>readiness probes</em> to know when a 
+Container is ready to start accepting traffic.</p>
+
+<p>Health probes also provide crucial benefits when automating deployments with practices like rolling updates in 
+order to remove downtime during deployments. A readiness health probe would signal OpenShift when to switch 
+traffic from the old version of the container to the new version so that the users don’t get affected during 
+deployments.</p>
+
+<p>There are <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/application_health.html#container-health-checks-using-probes">three ways to define a health probe</a> for a container:</p>
+
+<ul>
+  <li>
+    <p><strong>HTTP Checks:</strong> healthiness of the container is determined based on the response code of an HTTP 
+endpoint. Anything between 200 and 399 is considered success. A HTTP check is ideal for applications 
+that return HTTP status codes when completely initialized.</p>
+  </li>
+  <li>
+    <p><strong>Container Execution Checks:</strong> a specified command is executed inside the container and the healthiness is 
+determined based on the return value (0 is success).</p>
+  </li>
+  <li>
+    <p><strong>TCP Socket Checks:</strong> a socket is opened on a specified port to the container and it’s considered healthy 
+only if the check can establish a connection. TCP socket check is ideal for applications that do not 
+start listening until initialization is complete.</p>
+  </li>
+</ul>
+
+<p>Let’s add health probes to the microservices deployed so far.</p>
+
+<h4 id="explore-health-rest-endpoints">Explore Health REST Endpoints</h4>
+
+<p>Spring Boot, WildFly Swarm and Vert.x all provide out-of-the-box support for creating RESTful endpoints that
+provide details on the health of the application. These endpoints by default provide basic data about the 
+service however they all provide a way to customize the health data and add more meaningful information (e.g. 
+database connection health, backoffice system availability, etc).</p>
+
+<p><a href="http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready">Spring Boot Actuator</a> is a 
+sub-project of Spring Boot which adds health and management HTTP endpoints to the application. Enabling Spring Boot 
+Actuator is done via adding <code>org.springframework.boot:spring-boot-starter-actuator</code> dependency to the Maven project 
+dependencies which is already done for the Catalog services.</p>
+
+<p>Verify that the health endpoint works for the Catalog service using <code>curl</code>, replacing <code>CATALOG-ROUTE-HOST</code> 
+with the Catalog route url:</p>
+
+<blockquote>
+  <p>Remember how to find out the route urls? Try <code>oc get route catalog</code></p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://CATALOG-ROUTE-HOST/health
+
+{"status":"UP","diskSpace":{"status":"UP","total":3209691136,"free":2667175936,"threshold":10485760},"db":{"status":"UP","database":"H2","hello":1}}
+</code></pre>
+
+<p><a href="https://wildfly-swarm.gitbooks.io/wildfly-swarm-users-guide/content/advanced/monitoring.html">WildFly Swarm health endpoints</a> function in a similar fashion and are enabled by adding <code>org.wildfly.swarm:monitor</code> 
+to the Maven project dependencies. 
+This is also already done for the Inventory service.</p>
+
+<p>Verify that the health endpoint works for the Inventory service using <code>curl</code>, replacing <code>INVENTORY-ROUTE-HOST</code> 
+with the Inventory route url:</p>
+
+<blockquote>
+  <p>You know this by now! Use <code>oc get route inventory</code> to get the Inventory route url</p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://INVENTORY-ROUTE-HOST/node
+
+{
+    "name" : "localhost",
+    "server-state" : "running",
+    "suspend-state" : "RUNNING",
+    "running-mode" : "NORMAL",
+    "uuid" : "79b3ffc5-d98c-4b8e-ae5c-9756ed13944a",
+    "swarm-version" : "2017.8.1"
+}
+</code></pre>
+
+<p>Expectedly, Eclipse Vert.x also provides a <a href="http://vertx.io/docs/vertx-health-check/java">health check module</a> 
+which is enabled by adding <code>io.vertx:vertx-health-check</code> as a dependency to the Maven project.</p>
+
+<p>Verify that the health endpoint works for the Inventory service using <code>curl</code>, replacing <code>API-GATEWAY-ROUTE-HOST</code> 
+with the API Gateway route url::</p>
+
+<blockquote>
+  <p>Yup! You can use <code>oc get route gateway</code> to get the API Gateway route url</p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://API-GATEWAY-ROUTE-HOST/health
+
+{"status":"UP"}
+</code></pre>
+
+<p>Last but not least, although you can build more sophisticated health endpoints for the Web UI as well, you 
+can use the root context (“/”) of the Web UI in this lab to verify it’s up and running.</p>
+
+<h4 id="monitoring-catalog-service-health">Monitoring Catalog Service Health</h4>
+
+<p>Health probes are defined on the deployment config for each pod and can be added using OpenShift Web 
+Console or OpenShift CLI. You will try both in this lab.</p>
+
+<p>Like mentioned, health probes are defined on a deployment config for each pod. Review the available 
+deployment configs in the project.</p>
+
+<pre><code class="language-shell">$ oc get dc
+
+NAME        REVISION   DESIRED   CURRENT   TRIGGERED BY
+catalog     1          1         1         config,image(catalog:latest)
+gateway     1          1         1         config,image(gateway:latest)
+inventory   1          1         1         config,image(inventory:latest)
+web         1          1         1         config,image(web:latest)
+</code></pre>
+
+<blockquote>
+  <p><code>dc</code> stands for deployment config</p>
+</blockquote>
+
+<p>Add a liveness probe on the catalog deployment config using <code>oc set probe</code>:</p>
+
+<pre><code class="language-shell">$ oc set probe dc/catalog --liveness --initial-delay-seconds=30 --failure-threshold=3 --get-url=http://:8080/health
+</code></pre>
+
+<blockquote>
+  <p>OpenShift automates deployments using 
+<a href="https://docs.openshift.com/container-platform/3.11/dev_guide/deployments/basic_deployment_operations.html#triggers">deployment triggers</a> 
+that react to changes to the container image or configuration. 
+Therefore, as soon as you define the probe, OpenShift automatically redeploys the 
+Catalog pod using the new configuration including the liveness probe.</p>
+</blockquote>
+
+<p>The <code>--get-url</code> defines the HTTP endpoint to use for check the liveness of the container. The <code>\http://:8080</code> 
+syntax is a convenient way to define the endpoint without having to worry about the hostname for the running 
+container.</p>
+
+<blockquote>
+  <p>It is possible to customize the probes even further using for example <code>--initial-delay-seconds</code> to specify how long 
+to wait after the container starts and before to begin checking the probes. Run <code>oc set probe --help</code> to get 
+a list of all available options.</p>
+</blockquote>
+
+<p>Add a readiness probe on the catalog deployment config using the same <code>/health</code> endpoint that you used for 
+the liveness probe.</p>
+
+<blockquote>
+  <p>It’s recommended to have separate endpoints for readiness and liveness to indicate to OpenShift when 
+to restart the container and when to leave it alone and remove it from the load-balancer so that an administrator 
+would  manually investigate the issue.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc set probe dc/catalog --readiness --initial-delay-seconds=30 --failure-threshold=3 --get-url=http://:8080/health 
+</code></pre>
+
+<p>Viola! OpenShift automatically restarts the Catalog pod and as soon as the 
+health probes succeed, it is ready to receive traffic.</p>
+
+<blockquote>
+  <p>Fabric8 Maven Plugin can also be configured to automatically set the health probes when running <code>fabric8:deploy</code> 
+goal. Read more on <a href="https://maven.fabric8.io/#enrichers">Fabric8 docs</a> under 
+<a href="https://maven.fabric8.io/#f8-spring-boot-health-check">Spring Boot</a>, 
+<a href="https://maven.fabric8.io/#f8-wildfly-swarm-health-check">WildFly Swarm</a> and 
+<a href="https://maven.fabric8.io/#f8-vertx-health-check">Eclipse Vert.x</a>.</p>
+</blockquote>
+
+<h4 id="monitoring-inventory-service-health">Monitoring Inventory Service Health</h4>
+
+<p>Adding liveness and readiness probes can be done at the same time if you want to define the same health endpoint 
+and parameters for both liveness and readiness probes.</p>
+
+<p>Add liveness and readiness probes to the Inventory service:</p>
+
+<pre><code class="language-shell">$ oc set probe dc/inventory --liveness --readiness --initial-delay-seconds=30 --failure-threshold=3 --get-url=http://:8080/node
+</code></pre>
+
+<p>OpenShift automatically restarts the Inventory pod and as soon as the health probes succeed, it is ready to receive traffic.</p>
+
+<p>Using the <code>oc describe</code> command, you can get a detailed look into the deployment config and verify that the health probes are in fact 
+configured as you wanted:</p>
+
+<pre><code class="language-shell">$ oc describe dc/inventory
+
+Name:       inventory
+Namespace:  coolstore-XX
+...
+  Containers:
+   wildfly-swarm:
+    ...
+    Liveness:     http-get http://:8080/node delay=180s timeout=1s period=10s #success=1 #failure=3
+    Readiness:    http-get http://:8080/node delay=10s timeout=1s period=10s #success=1 #failure=3
+...
+</code></pre>
+
+<h4 id="monitoring-api-gateway-health">Monitoring API Gateway Health</h4>
+
+<p>You are an expert in health probes by now! Add liveness and readiness probes to the API Gateway service:</p>
+
+<pre><code class="language-shell">$ oc set probe dc/gateway --liveness --readiness --initial-delay-seconds=15 --failure-threshold=3 --get-url=http://:8080/health
+</code></pre>
+
+<p>OpenShift automatically restarts the Inventory pod and as soon as the health probes succeed, it is 
+ready to receive traffic.</p>
+
+<h4 id="monitoring-web-ui-health">Monitoring Web UI Health</h4>
+
+<p>Although you can add the liveness and health probes to the Web UI using a single CLI command, let’s 
+give the OpenShift Web Console a try this time.</p>
+
+<p>Go the OpenShift Web Console in your browser and in the <strong>coolstore-XX</strong> project. Click on 
+<strong>Applications&nbsp;» Deployments</strong> on the left-side bar. Click on <code>web</code> and then the <strong>Configuration</strong> 
+tab. You will see the warning about health checks, with a link to
+click in order to add them. Click <strong>Add health checks</strong> now.</p>
+
+<blockquote>
+  <p>Instead of <strong>Configuration</strong> tab, you can directly click on <strong>Actions</strong> button on the top-right 
+and then <strong>Edit Health Checks</strong></p>
+</blockquote>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/health-web-details.png" alt="Health Probes" width="900px"></p>
+
+<p>You will want to click both <strong>Add Readiness Probe</strong> and <strong>Add Liveness Probe</strong> and
+then fill them out as follows:</p>
+
+<p><em>Readiness Probe</em></p>
+
+<ul>
+  <li>Path: <code>/</code></li>
+  <li>Initial Delay: <code>10</code></li>
+  <li>Timeout: <code>1</code></li>
+</ul>
+
+<p><em>Liveness Probe</em></p>
+
+<ul>
+  <li>Path: <code>/</code></li>
+  <li>Initial Delay: <code>180</code></li>
+  <li>Timeout: <code>1</code></li>
+</ul>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/health-readiness.png" alt="Readiness Probe" width="700px"></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/health-liveness.png" alt="Readiness Probe" width="700px"></p>
+
+<p>Click <strong>Save</strong> and then click the <strong>Overview</strong> button in the left navigation. You
+will notice that Web UI pod is getting restarted and it stays light blue
+for a while. This is a sign that the pod(s) have not yet passed their readiness
+checks and it turns blue when it’s ready!</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/health-web-redeploy.png" alt="Web Redeploy" width="740px"></p>
+
+<h4 id="monitoring-metrics">Monitoring Metrics</h4>
+
+<p>Metrics are another important aspect of monitoring applications which is required in order to 
+gain visibility into how the application behaves and particularly in identifying issues.</p>
+
+<p>OpenShift provides container metrics out-of-the-box and displays how much memory, cpu and network 
+each container has been consuming over time. In the project overview, you can see three charts 
+near each pod that shows the resource consumption by that pod.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/health-metrics-brief.png" alt="Container Metrics" width="740px"></p>
+
+<p>Click on any of the pods (blue circle) which takes you to the pod details. Click on the <strong>Metrics</strong> tab 
+to see a more detailed view of the metrics charts.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/health-metrics-detailed.png" alt="Container Metrics" width="900px"></p>
+
+<p>Well done! You are ready to move on to the next lab.</p>
+
+        <hr>
+        <h2>Service Resilience and Fault Tolerance</h2>
+        <h2 id="service-resilience-and-fault-tolerance">Service Resilience and Fault Tolerance</h2>
+
+<p>In this lab you will learn about how you can build service resilience and fault tolerance into 
+the applications both at the infrastructure level using OpenShift capabilities as well as 
+at the application level using circuit breakers to prevent cascading failures when 
+downstream dependencies fail.</p>
+
+<h4 id="scaling-up-applications">Scaling Up Applications</h4>
+
+<p>An application’s capacity for serving clients is bounded by the amount of computing power 
+allocated to them and although it’s possible to increase the computing power per instance, 
+it’s far easier to keep the application instances within reasonable sizes and 
+instead add more instances to increase serving capacity. Traditionally, due to 
+the stateful nature of most monolithic applications, increasing capacity had been achieved 
+via scaling up the application server and the underlying virtual or physical machine by adding 
+more cpu and memory (vertical scaling). Cloud-native apps however are stateless and can be 
+easily scaled up by spinning up more application instances and load-balancing requests 
+between those instances (horizontal scaling).</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-scale-up-vs-out.png" alt="Scaling Up vs Scaling Out" width="500px"></p>
+
+<p>In previous labs, you learned how to build container images from your application code and 
+deploy them on OpenShift. Container images on OpenShift follow the 
+<a href="https://martinfowler.com/bliki/ImmutableServer.html">immutable server</a> pattern which guarantees 
+your application instances will always start from a known well-configured state and makes 
+deploying instances a repeatable practice. Immutable server pattern simplifies scaling out 
+application instances to starting a new instance which is guaranteed to be identical to the 
+existing instances and adding it to the load-balancer.</p>
+
+<p>Now, let’s use the <code>oc scale</code> command to scale up the Web UI pod in the CoolStore retail 
+application to 2 instances. In OpenShift, deployment config is responsible for starting the 
+application pods and ensuring the specified number of instances for each application pod 
+is running. Therefore the number of pods you want to scale to should be defined on the 
+deployment config.</p>
+
+<blockquote>
+  <p>You can scale pods up and down via the OpenShift Web Console by clicking on the up and 
+down arrows on the right side of each pods blue circle.</p>
+</blockquote>
+
+<p>First, get list of deployment configs available in the project.</p>
+
+<pre><code class="language-shell">$ oc project coolstore-XX
+$ oc get dc 
+
+NAME        REVISION   DESIRED   CURRENT   TRIGGERED BY
+catalog     1          1         1         config,image(catalog:latest)
+gateway     1          1         1         config,image(gateway:latest)
+inventory   1          1         1         config,image(inventory:latest)
+web         1          1         1         config,image(web:latest)
+</code></pre>
+
+<p>And then, scale the <code>web</code> deployment config to 2 pods:</p>
+
+<pre><code class="language-shell">$ oc scale dc/web --replicas=2
+</code></pre>
+
+<p>The <code>--replicas</code> option specified the number of Web UI pods that should be running. If you look 
+at the OpenShift Web Console, you can see a new pod is being started for the Web UI and as soon 
+as the health probes pass, it will be automatically added to the load-balancer.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-scale-up.png" alt="Scaling Up Pods" width="740px"></p>
+
+<p>You can verify that the new pod is added to the load balancer by checking the details of the 
+Web UI service object:</p>
+
+<pre><code class="language-shell">$ oc describe svc/web
+
+...
+Endpoints:              10.129.0.146:8080,10.129.0.232:8080
+...
+</code></pre>
+
+<p><code>Endpoints</code> shows the IPs of the 2 pods that the load-balancer is sending traffic to.</p>
+
+<blockquote>
+  <p>The load-balancer by default, sends the client to the same pod on consequent requests. The 
+<a href="https://docs.openshift.com/container-platform/3.5/architecture/core_concepts/routes.html#load-balancing">load-balancing strategy</a> 
+can be specified using an annotation on the route object. Run the following to change the load-balancing 
+strategy to round robin:</p>
+
+  <pre><code>$ oc annotate route/web haproxy.router.openshift.io/balance=roundrobin
+</code></pre>
+
+</blockquote>
+
+<h4 id="scaling-applications-on-auto-pilot">Scaling Applications on Auto-pilot</h4>
+
+<p>Although scaling up and scaling down pods are automated and easy using OpenShift, however it still 
+requires a person or a system to run a command or invoke an API call (to OpenShift REST API. Yup! there
+is a REST API for all OpenShift operations) to scale the applications. That in turn needs to be in response 
+to some sort of increase to the application load and therefore the person or the system needs to be aware of 
+how much load the application is handling at all times to make the scaling decision.</p>
+
+<p>OpenShift automates this aspect of scaling as well via automatically scaling the application pods up 
+and down within a specified min and max boundary based on the container metrics such as cpu and memory 
+consumption. In that case, if there is a surge of users visiting the CoolStore online shop due to 
+holiday season coming up or a good deal on a product, OpenShift would automatically add more pods to 
+handle the increased load on the application and after the load goes back down, the application is automatically scaled down to free up compute resources.</p>
+
+<p>In order to define auto-scaling for a pod, we should first define how much cpu and memory a pod is 
+allowed to consume which will act as a guideline for OpenShift to know when to scale the pod up or 
+down. Since the deployment config is used when starting the application pods, the application pod resource 
+(cpu and memory) containers should also be defined on the deployment config.</p>
+
+<p>When allocating compute resources to application pods, each container may specify a <em>request</em>
+and a <em>limit</em> value each for CPU and memory. The 
+<a href="https://docs.openshift.com/container-platform/3.11/dev_guide/compute_resources.html#dev-memory-requests"><em>request</em></a> 
+values define how much resource should be dedicated to an application pod so that it can run. It’s 
+the minimum resources needed in other words. The 
+<a href="https://docs.openshift.com/container-platform/3.11/dev_guide/compute_resources.html#dev-memory-limits"><em>limit</em></a> values 
+defines how much resource an application pod is allowed to consume, if there is more resources 
+on the node available than what the pod has requested. This is to allow various quality of service 
+tiers with regards to compute resources. You can read more about these quality of service tiers 
+in <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/compute_resources.html#quality-of-service-tiers">OpenShift Documentation</a>.</p>
+
+<p>Set the following resource constraints on the Web UI pod:</p>
+
+<ul>
+  <li>Memory Request: 256 MB</li>
+  <li>Memory Limit: 512 MB</li>
+  <li>CPU Request: 200 millicore</li>
+  <li>CPU Limit: 300 millicore</li>
+</ul>
+
+<blockquote>
+  <p>CPU is measured in units called millicores. Each node in a cluster inspects the 
+operating system to determine the amount of CPU cores on the node, then multiplies 
+that value by 1000 to express its total capacity. For example, if a node has 2 cores, 
+the node’s CPU capacity would be represented as 2000m. If you wanted to use 1/10 of 
+a single core, it would be represented as 100m. Memory is measured in 
+bytes and is specified with <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/compute_resources.html#dev-compute-resources">SI suffices</a> 
+(E, P, T, G, M, K) or their power-of-two-equivalents (Ei, Pi, Ti, Gi, Mi, Ki).</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc set resources dc/web --limits=cpu=400m,memory=512Mi --requests=cpu=200m,memory=256Mi
+
+deploymentconfig "web" resource requirements updated
+</code></pre>
+
+<blockquote>
+  <p>You can also use the OpenShift Web Console by clicking on <strong>Applications</strong>&nbsp;» <strong>Deployments</strong> within 
+the <strong>coolstore-XX</strong> project. Click then on <strong>web</strong> and from the <strong>Actions</strong> menu on 
+the top-right, choose <strong>Edit Resource Limits</strong>.</p>
+</blockquote>
+
+<p>The pods get restarted automatically setting the new resource limits in effect. Now you can define an 
+autoscaler using <code>oc autoscale</code> command to scale the Web UI pods up to 5 instances whenever 
+the CPU consumption passes 50% utilization:</p>
+
+<blockquote>
+  <p>You can configure an autoscaler using OpenShift Web Console by clicking 
+on <strong>Applications</strong>&nbsp;» <strong>Deployments</strong> within 
+the <strong>coolstore-XX</strong> project. Click then on <strong>web</strong> and from the <strong>Actions</strong> menu on 
+the top-right, choose <strong>Add Autoscaler</strong> or <strong>Edit Autoscaler</strong>, depending on whether or not 
+you already have an autoscaler configured.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc autoscale dc/web --min 1 --max 5 --cpu-percent=40
+
+deploymentconfig "web" autoscaled
+</code></pre>
+
+<p>All set! Now the Web UI can scale automatically to multiple instances if the load on the CoolStore 
+online store increases. You can verify that using for example the <code>siege</code> command-line utility, which 
+is a handy tool for running load tests against web endpoints and is already 
+installed within your Eclipse Che workspace.</p>
+
+<p>Run the following command in the <strong>Terminal</strong> window.</p>
+
+<pre><code class="language-shell">$ siege -c80 -d2 -t5M http://web.coolstore-XX.svc.cluster.local:8080
+</code></pre>
+
+<p>Note that you are using the internal url of the Web UI in this command. Since Eclipse Che is running on 
+the same OpenShift cluster as Web UI, you can choose to use the external URL that is exposed on the load balancer 
+or the internal user which goes directly to the Web UI pod and bypasses the load balancer. You can 
+read more about internal service dns names in 
+<a href="https://docs.openshift.com/container-platform/3.11/architecture/networking/networking.html">OpenShift Docs</a>.</p>
+
+<p>As the load is generated, you will notice that it will create a spike in the 
+Web UI cpu usage and trigger the autoscaler to scale the Web UI container to 5 pods (as configured 
+on the deployment config) to cope with the load.</p>
+
+<blockquote>
+  <p>Depending on the resources available on the OpenShift cluster in the lab environment, 
+the Web UI might scale to fewer than 5 pods to handle the extra load. Run the command again 
+to generate more load.</p>
+</blockquote>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-autoscale-web.gif" alt="Web UI Automatically Scaled" width="740px"></p>
+
+<p>You can see the aggregated cpu metrics graph of all 5 Web UI pods by going to the OpenShift Web Console and clicking on 
+<strong>Monitoring</strong> and then the arrow (<strong>&gt;</strong>) on the left side of <strong>web-n</strong> under <strong>Deployments</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-autoscale-metrics.png" alt="Web UI Aggregated CPU Metrics" width="740px"></p>
+
+<p>When the load on Web UI disappears, after a while OpenShift scales the Web UI pods down to the minimum 
+or whatever this needed to cope with the load at that point.</p>
+
+<h4 id="self-healing-failed-application-pods">Self-healing Failed Application Pods</h4>
+
+<p>We looked at how to build more resilience into the applications through scaling in the 
+previous sections. In this section, you will learn how to recover application pods when 
+failures happen. In fact, you don’t need to do anything because OpenShift automatically 
+recovers failed pods when pods are not feeling healthy. The healthiness of application pods is determined via the 
+<a href="https://docs.openshift.com/container-platform/3.11/dev_guide/application_health.html#container-health-checks-using-probes">health probes</a> 
+which was discussed in the previous labs.</p>
+
+<p>There are three auto-healing scenarios that OpenShift handles automatically:</p>
+
+<ul>
+  <li>
+    <p>Application Pod Temporary Failure: when an application pod fails and does not pass its 
+<a href="https://docs.openshift.com/container-platform/3.11/dev_guide/application_health.html#container-health-checks-using-probes">liveness health probe</a>,<br>
+OpenShift restarts the pod in order to give the application a chance to recover and start functioning 
+again. Issues such as deadlocks, memory leaks, network disturbance and more are all examples of issues 
+that can most likely be resolved by restarting the application despite the potential bug remaining in the 
+application.</p>
+  </li>
+  <li>
+    <p>Application Pod Permanent Failure: when an application pod fails and does not pass its 
+<a href="https://docs.openshift.com/container-platform/3.11/dev_guide/application_health.html#container-health-checks-using-probes">readiness health probe</a>, 
+it signals that the failure is more severe and restart is unlikely to help to mitigate the issue. OpenShift then 
+removes the application pod from the load-balancer to prevent sending traffic to it.</p>
+  </li>
+  <li>
+    <p>Application Pod Removal: if an instance of the application pods gets removed, OpenShift automatically 
+starts new identical application pods based on the same container image and configuration so that the 
+specified number of instances are running at all times. An example of a removed pod is when an entire 
+node (virtual or physical machine) crashes and is removed from the cluster.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p>OpenShift is quite orderly in this regard and if extra instances of the application pod would start running, 
+it would kill the extra pods so that the number of running instances matches what is configured on the deployment 
+config.</p>
+</blockquote>
+
+<p>All of the above comes out-of-the-box and doesn’t need any extra configuration. Remove the Catalog 
+pod to verify how OpenShift starts the pod again. First, check the Catalog pod that is running:</p>
+
+<pre><code class="language-shell">$ oc get pods -l deploymentconfig=catalog
+
+NAME              READY     STATUS    RESTARTS   AGE
+catalog-3-xf111   1/1       Running   0          42m
+</code></pre>
+
+<p>The <code>-l</code> options tells the command to list pods that have the <code>deploymentconfig=catalog</code> label 
+assigned to them. You can see pods labels using <code>oc get pods --show-labels</code> command.</p>
+
+<p>Delete the Catalog pod.</p>
+
+<pre><code class="language-shell">oc delete pods -l deploymentconfig=catalog
+</code></pre>
+
+<p>You need to be fast for this one! List the Catalog pods again immediately:</p>
+
+<pre><code class="language-shell">$ oc get pods -l deploymentconfig=catalog
+
+NAME              READY     STATUS              RESTARTS   AGE
+catalog-3-5dx5d   0/1       ContainerCreating   0          1s
+catalog-3-xf111   0/1       Terminating         0          4m
+</code></pre>
+
+<p>As the Catalog pod is being deleted, OpenShift notices the lack of 1 pod and starts a new Catalog 
+pod automatically.</p>
+
+<h4 id="preventing-cascading-failures-with-circuit-breakers">Preventing Cascading Failures with Circuit Breakers</h4>
+
+<p>In this lab so far you have been looking at how to make sure the application pod is running, can scale to accommodate 
+user load and recovers from failures. However failures also happen in the downstream services that an application 
+is dependent on. It’s not uncommon that the whole application fails or slows down because one of the downstream 
+services consumed by the application is not responsive or responds slowly.</p>
+
+<p><a href="https://martinfowler.com/bliki/CircuitBreaker.html">Circuit Breaker</a> is a pattern to address this issue and while 
+it became popular with microservice architecture, it’s a useful pattern for all applications that depend on other 
+services.</p>
+
+<p>The idea behind the circuit breaker is that you wrap the API calls to downstream services in a circuit breaker 
+object, which monitors for failures. Once the service invocation fails a certain number of times, the circuit 
+breaker flips open, and all further calls to the circuit breaker return with an error or a fallback logic 
+without making the call to the unresponsive API. After a certain period, the circuit breaker will allow a call 
+to the downstream service to test the waters. If the call is successful, the circuit breaker closes and would call 
+the downstream service on consequent calls.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-circuit-breaker.png" alt="Circuit Breaker" width="300px"></p>
+
+<p>Spring Boot and WildFly Swarm provide convenient integration with <a href="https://github.com/Netflix/Hystrix">Hystrix</a> 
+which is a framework that provides circuit breaker functionality. Eclipse Vert.x, in addition to integration 
+with Hystrix, provides built-in support for circuit breakers.</p>
+
+<p>Let’s take the Inventory service down and see what happens to the CoolStore online shop.</p>
+
+<pre><code class="language-shell">$ oc scale dc/inventory --replicas=0
+</code></pre>
+
+<p>Now point your browser at the Web UI route url.</p>
+
+<blockquote>
+  <p>You can find the Web UI route url in the OpenShift Web Console above the <code>web</code> pod or 
+using the <code>oc get routes</code> command.</p>
+</blockquote>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-coolstore-no-cb.png" alt="CoolStore Without Circuit Breaker" width="840px"></p>
+
+<p>Although only the Inventory service is down, there are no products displayed in the online store because 
+the Inventory service call failure propagates and causes the entire API Gateway to blow up!</p>
+
+<p>The CoolStore online shop cannot function without the products list, however the inventory status is not a 
+crucial bit in the shopping experience. Let’s add a circuit breaker for calls to the Inventory service and 
+provide a default inventory status when the Inventory service is not responsive.</p>
+
+<p>In the <code>gateway-vertx</code> project, open <code>src/main/java/com/redhat/cloudnative/gateway/GatewayVerticle.java</code> and 
+replace its code it with the following code:</p>
+
+<pre><code class="language-java">package com.redhat.cloudnative.gateway;
+
+import io.vertx.circuitbreaker.CircuitBreakerOptions;
+import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.client.WebClientOptions;
+import io.vertx.rxjava.circuitbreaker.CircuitBreaker;
+import io.vertx.rxjava.core.AbstractVerticle;
+import io.vertx.rxjava.ext.web.Router;
+import io.vertx.rxjava.ext.web.RoutingContext;
+import io.vertx.rxjava.ext.web.client.WebClient;
+import io.vertx.rxjava.ext.web.codec.BodyCodec;
+import io.vertx.rxjava.ext.web.handler.CorsHandler;
+import io.vertx.rxjava.servicediscovery.ServiceDiscovery;
+import io.vertx.rxjava.servicediscovery.types.HttpEndpoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rx.Observable;
+import rx.Single;
+
+public class GatewayVerticle extends AbstractVerticle {
+    private static final Logger LOG = LoggerFactory.getLogger(GatewayVerticle.class);
+
+    private WebClient catalog;
+    private WebClient inventory;
+    private CircuitBreaker circuit;
+
+    @Override
+    public void start() {
+
+        circuit = CircuitBreaker.create("inventory-circuit-breaker", vertx,
+            new CircuitBreakerOptions()
+                .setFallbackOnFailure(true)
+                .setMaxFailures(3)
+                .setResetTimeout(5000)
+                .setTimeout(1000)
+        );
+
+        Router router = Router.router(vertx);
+        router.route().handler(CorsHandler.create("*").allowedMethod(HttpMethod.GET));
+        router.get("/health").handler(ctx -&gt; ctx.response().end(new JsonObject().put("status", "UP").toString()));
+        router.get("/api/products").handler(this::products);
+
+        ServiceDiscovery.create(vertx, discovery -&gt; {
+            // Catalog lookup
+            Single&lt;WebClient&gt; catalogDiscoveryRequest = HttpEndpoint.rxGetWebClient(discovery,
+                    rec -&gt; rec.getName().equals("catalog"))
+                    .onErrorReturn(t -&gt; WebClient.create(vertx, new WebClientOptions()
+                            .setDefaultHost(System.getProperty("catalog.api.host", "localhost"))
+                            .setDefaultPort(Integer.getInteger("catalog.api.port", 9000))));
+
+            // Inventory lookup
+            Single&lt;WebClient&gt; inventoryDiscoveryRequest = HttpEndpoint.rxGetWebClient(discovery,
+                    rec -&gt; rec.getName().equals("inventory"))
+                    .onErrorReturn(t -&gt; WebClient.create(vertx, new WebClientOptions()
+                            .setDefaultHost(System.getProperty("inventory.api.host", "localhost"))
+                            .setDefaultPort(Integer.getInteger("inventory.api.port", 9001))));
+
+            // Zip all 3 requests
+            Single.zip(catalogDiscoveryRequest, inventoryDiscoveryRequest, (c, i) -&gt; {
+                // When everything is done
+                catalog = c;
+                inventory = i;
+                return vertx.createHttpServer()
+                    .requestHandler(router::accept)
+                    .listen(Integer.getInteger("http.port", 8080));
+            }).subscribe();
+        });
+    }
+
+    private void products(RoutingContext rc) {
+        // Retrieve catalog
+        catalog.get("/api/catalog").as(BodyCodec.jsonArray()).rxSend()
+            .map(resp -&gt; {
+                if (resp.statusCode() != 200) {
+                    new RuntimeException("Invalid response from the catalog: " + resp.statusCode());
+                }
+                return resp.body();
+            })
+            .flatMap(products -&gt;
+                // For each item from the catalog, invoke the inventory service
+                Observable.from(products)
+                    .cast(JsonObject.class)
+                    .flatMapSingle(product -&gt;
+                        circuit.rxExecuteCommandWithFallback(
+                            future -&gt;
+                                inventory.get("/api/inventory/" + product.getString("itemId")).as(BodyCodec.jsonObject())
+                                    .rxSend()
+                                    .map(resp -&gt; {
+                                        if (resp.statusCode() != 200) {
+                                            LOG.warn("Inventory error for {}: status code {}",
+                                                    product.getString("itemId"), resp.statusCode());
+                                        }
+                                        return product.copy().put("availability", 
+                                            new JsonObject().put("quantity", resp.body().getInteger("quantity")));
+                                    })
+                                    .subscribe(
+                                        future::complete,
+                                        future::fail),
+                            error -&gt; {
+                                LOG.error("Inventory error for {}: {}", product.getString("itemId"), error.getMessage());
+                                return product;
+                            }
+                        ))
+                    .toList().toSingle()
+            )
+            .subscribe(
+                list -&gt; rc.response().end(Json.encodePrettily(list)),
+                error -&gt; rc.response().end(new JsonObject().put("error", error.getMessage()).toString())
+            );
+    }
+}
+</code></pre>
+
+<p>The above code is quite similar to the previous code however it wraps the calls to the Inventory 
+service in a <code>CircuitBreaker</code> using the built-in circuit breaker in Vert.x. The circuit breaker 
+is configured to flip open after 3 failures and time out on the 
+calls after 1 second.</p>
+
+<p>The <code>circuit.rxExecuteCommandWithFallback(...)</code> method, defines the fallback logic for 
+when the circuit is open and logs an error without calling the Inventory service in those 
+scenarios.</p>
+
+<p>Build and package the Gateway service using Maven by clicking on <strong>BUILD &gt; build</strong> from the commands palette.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/eclipse-che-commands-build.png" alt="Maven Build" width="340px"></p>
+
+<p>Although you can use the <strong>DEPLOY &gt; fabric8:deploy</strong> from the commands palette, you 
+can also trigger a new container image build on OpenShift using 
+the <code>oc start-build</code> command which allows you to build container images directly from the application 
+archives (<code>jar</code>, <code>war</code>, etc) without the need to have access to the source code for example by downloading 
+the <code>jar</code> file form the Maven repository (e.g. Nexus or Artifactory).</p>
+
+<pre><code class="language-shell">$ oc start-build gateway-s2i --from-file=labs/gateway-vertx/target/gateway-1.0-SNAPSHOT.jar
+</code></pre>
+
+<p>As soon as the new <code>gateway</code> container image is built, OpenShift deploys the new image automatically 
+thanks to the <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/deployments/basic_deployment_operations.html#triggers">deployment triggers</a> 
+defined on the <code>gateway</code> deployment config.</p>
+
+<p>Let’s try the Web UI again in the browser while the Inventory service is still down.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/fault-coolstore-with-cb.png" alt="CoolStore With Circuit Breaker" width="840px"></p>
+
+<p>It looks better now! The Inventory service failure is contained and the inventory status is removed from the 
+user interface and allows the CoolStore online shop to continue functioning and accept orders. Selling an 
+out-of-stock product to a few customers can simply be resolved by a discount coupons while 
+losing the trust of all visiting customers due to a crashed online store is not so easily repairable!</p>
+
+<p>Scale the Inventory service back up before moving on to the next labs.</p>
+
+<pre><code class="language-shell">$ oc scale dc/inventory --replicas=1
+</code></pre>
+
+<p>Well done! Let’s move on to the next lab.</p>
+
+        <hr>
+        <h2>Application Configuration</h2>
+        <h2 id="managing-application-configuration">Managing Application Configuration</h2>
+
+<p>In this lab you will learn how to manage application configuration and how to provide environment 
+specific configuration to the services.</p>
+
+<h4 id="application-configuration">Application Configuration</h4>
+
+<p>Applications require configuration in order to tweak the application behavior 
+or adapt it to a certain environment without the need to write code and repackage 
+the application for every change. These configurations are sometimes specific to 
+the application itself such as the number of products to be displayed on a product 
+page and some other times they are dependent on the environment they are deployed in 
+such as the database coordinates for the application.</p>
+
+<p>The most common way to provide configurations to applications is using environment 
+variables and external configuration files such as properties, JSON or YAML files, 
+configuration files and command line arguments. These configuration artifacts
+should be externalized from the application and the container image content in
+order to keep the image portable across environments.</p>
+
+<p>OpenShift provides a mechanism called <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/configmaps.html">ConfigMaps</a> 
+in order to externalize configurations 
+from the applications deployed within containers and provide them to the containers 
+in a unified way as files and environment variables. OpenShift also offers a way to 
+provide sensitive configuration data such as certificates, credentials, etc. to the 
+application containers in a secure and encrypted mechanism called Secrets.</p>
+
+<p>This allows developers to build the container image for their application only once, 
+and reuse that image to deploy the application across various environments with 
+different configurations that are provided to the application at runtime.</p>
+
+<h4 id="create-postgresql-databases-for-inventory-and-catalog">Create PostgreSQL Databases for Inventory and Catalog</h4>
+
+<p>So far Catalog and Inventory services have been using an in-memory H2 database. Although H2 
+is a convenient database to run locally on your laptop, it’s in no way appropriate for production or 
+even integration tests. Since it’s strongly recommended to use the same technology stack (operating 
+system, JVM, middleware, database, etc.) that is used in production across all environments, you 
+should modify Inventory and Catalog services to use PostgreSQL instead of the H2 in-memory database.</p>
+
+<p>Fortunately, OpenShfit supports stateful applications such as databases which require access to 
+a persistent storage that survives the container itself. You can deploy databases on OpenShift and 
+regardless of what happens to the container itself, the data is safe and can be used by the next 
+database container.</p>
+
+<p>Let’s create a <a href="https://docs.openshift.com/container-platform/3.11/using_images/db_images/postgresql.html">PostgreSQL database</a> 
+for the Inventory service using the PostgreSQL template that is provided out-of-the-box:</p>
+
+<blockquote>
+  <p><a href="https://docs.openshift.com/container-platform/3.11/dev_guide/templates.html">OpenShift Templates</a> use YAML/JSON to compose 
+multiple containers and their configurations as a list of objects to be created and deployed at once, 
+making it simple to re-create complex deployments by just deploying a single template. Templates can 
+be parameterized to get input for fields like service names and generate values for fields like passwords.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc new-app postgresql-persistent \
+    --param=DATABASE_SERVICE_NAME=inventory-postgresql \
+    --param=POSTGRESQL_DATABASE=inventory \
+    --param=POSTGRESQL_USER=inventory \
+    --param=POSTGRESQL_PASSWORD=inventory \
+    --labels=app=inventory
+</code></pre>
+
+<blockquote>
+  <p>The <code>--param</code> parameter provides a value for the template parameters. The recommended approach is 
+not to provide any value for username and password and allow the template to generate a random value for 
+you due to security reasons. In this lab in order to reduce typos, a fixed value is provided for username and 
+password.</p>
+</blockquote>
+
+<p>Deploy another PostgreSQL database for the Catalog service:</p>
+
+<pre><code class="language-shell">$ oc new-app postgresql-persistent \
+    --param=DATABASE_SERVICE_NAME=catalog-postgresql \
+    --param=POSTGRESQL_DATABASE=catalog \
+    --param=POSTGRESQL_USER=catalog \
+    --param=POSTGRESQL_PASSWORD=catalog \
+    --labels=app=catalog
+</code></pre>
+
+<p>Now you can move on to configure the Inventory and Catalog service to use these PostgreSQL databases.</p>
+
+<h4 id="externalize-wildfly-swarm-inventory-configuration">Externalize WildFly Swarm (Inventory) Configuration</h4>
+
+<p>WildFly Swarm supports multiple mechanisms for externalizing configurations such as environment variables, 
+Maven properties, command-line arguments and more. The recommend approach for the long-term for externalizing 
+configuration is however using a <a href="https://reference.wildfly-swarm.io/configuration.html#_using_yaml">YAML file</a> 
+which you have already packaged within the Inventory Maven project.</p>
+
+<p>The YAML file can be packaged within the application JAR file and be overladed 
+<a href="https://wildfly-swarm.gitbooks.io/wildfly-swarm-users-guide/configuration/command_line.html">using command-line or system properties</a> which you will do in this lab.</p>
+
+<blockquote>
+  <p>Check out <code>inventory-wildfly-swarm/src/main/resources/project-defaults.yml</code> which contains the default configuration.</p>
+</blockquote>
+
+<p>Create a YAML file with the PostgreSQL database credentials. Note that you can give an arbitrary 
+name to this configuration (e.g. <code>prod</code>) in order to tell WildFly Swarm which one to use:</p>
+
+<pre><code class="language-shell">$ cat &lt;&lt;EOF &gt; ./project-defaults.yml
+swarm:
+  datasources:
+    data-sources:
+      InventoryDS:
+        driver-name: postgresql
+        connection-url: jdbc:postgresql://inventory-postgresql:5432/inventory
+        user-name: inventory
+        password: inventory
+EOF
+</code></pre>
+
+<blockquote>
+  <p>The hostname defined for the PostgreSQL connection-url corresponds to the PostgreSQL 
+service name published on OpenShift. This name will be resolved by the internal DNS server 
+exposed by OpenShift and accessible to containers running on OpenShift.</p>
+</blockquote>
+
+<p>And then create a config map that you will use to overlay on the default <code>project-defaults.yml</code> which is 
+packaged in the Inventory JAR archive:</p>
+
+<pre><code class="language-shell">$ oc create configmap inventory --from-file=./project-defaults.yml
+</code></pre>
+
+<blockquote>
+  <p>If you don’t like bash commands, Go to the <strong>coolstore-XX</strong> 
+project in OpenShift Web Console and then on the left sidebar, <strong>Resources&nbsp;» Config Maps</strong>. Click 
+on <strong>Create Config Map</strong> button to create a config map with the following info:</p>
+
+  <ul>
+    <li>Name: <code>inventory</code></li>
+    <li>Key: <code>project-defaults.yml</code></li>
+    <li>Value: <em>copy-paste the content of the above project-defaults.yml excluding the first and last lines (the lines that contain EOF)</em></li>
+  </ul>
+</blockquote>
+
+<p>Config maps hold key-value pairs and in the above command an <code>inventory</code> config map 
+is created with <code>project-defaults.yml</code> as the key and the content of the <code>project-defaults.yml</code> as the 
+value. Whenever a config map is injected into a container, it would appear as a file with the same 
+name as the key, at specified path on the filesystem.</p>
+
+<blockquote>
+  <p>You can see the content of the config map in the OpenShift Web Console or by 
+using <code>oc describe cm inventory</code> command.</p>
+</blockquote>
+
+<p>Modify the Inventory deployment config so that it injects the YAML configuration you just created as 
+a config map into the Inventory container:</p>
+
+<pre><code class="language-shell">$ oc set volume dc/inventory --add --configmap-name=inventory --mount-path=/app/config
+</code></pre>
+
+<p>The above command mounts the content of the <code>inventory</code> config map as a file inside the Inventory container 
+at <code>/app/config/project-defaults.yaml</code></p>
+
+<p>The last step is the <a href="https://wildfly-swarm.gitbooks.io/wildfly-swarm-users-guide/configuration/command_line.html">aforementioned system properties</a> on the Inventory container to overlay the WildFly Swarm configuration, using the <code>JAVA_ARGS</code> environment variable.</p>
+
+<blockquote>
+  <p>The Java runtime on OpenShift can be configured using 
+<a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift/reference#configuration_environment_variables">a set of environment variables</a> 
+to tune the JVM without the need to rebuild a new Java runtime container image every time a new option is needed.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc set env dc/inventory JAVA_ARGS="-s /app/config/project-defaults.yml"
+</code></pre>
+
+<p>The Inventory pod gets restarted automatically due to the configuration changes. Wait till it’s ready, 
+and then verify that the config map is in fact injected into the container by running 
+a shell command inside the Inventory container:</p>
+
+<pre><code class="language-shell">$ oc rsh dc/inventory cat /app/config/project-defaults.yml
+</code></pre>
+
+<p>Also verify that the PostgreSQL database is actually used by the Inventory service. Check the 
+Inventory pod logs:</p>
+
+<pre><code class="language-shell">oc logs dc/inventory | grep hibernate.dialect
+
+2017-08-10 16:55:44,657 INFO  [org.hibernate.dialect.Dialect] (ServerService Thread Pool -- 15) HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL94Dialect
+</code></pre>
+
+<p>You can also connect to Inventory PostgreSQL database and check if the seed data is 
+loaded into the database.</p>
+
+<pre><code class="language-shell">$ oc rsh dc/inventory-postgresql
+</code></pre>
+
+<p>Once connected to the PostgreSQL container, run the following:</p>
+
+<blockquote>
+  <p>Run this command inside the Inventory PostgreSQL container, after opening a remote shell to it.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ psql -U inventory -c "select * from inventory"
+
+ itemid | quantity
+------------------
+ 329299 |       35
+ 329199 |       12
+ 165613 |       45
+ 165614 |       87
+ 165954 |       43
+ 444434 |       32
+ 444435 |       53
+ 444436 |       42
+(8 rows)
+
+$ exit
+</code></pre>
+
+<p>You have now created a config map that holds the configuration content for Inventory and can be updated 
+at anytime for example when promoting the container image between environments without needing to 
+modify the Inventory container image itself.</p>
+
+<h4 id="externalize-spring-boot-catalog-configuration">Externalize Spring Boot (Catalog) Configuration</h4>
+
+<p>You should be quite familiar with config maps by now. Spring Boot application configuration is provided 
+via a properties file called <code>application.properties</code> and can be 
+<a href="https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html">overriden and overlayed via multiple mechanisms</a>.</p>
+
+<blockquote>
+  <p>Check out the default Spring Boot configuration in Catalog Maven project <code>catalog-spring-boot/src/main/resources/application.properties</code>.</p>
+</blockquote>
+
+<p>In this lab, you will configure the Catalog service which is based on Spring Boot to override the default 
+configuration using an alternative <code>application.properties</code> backed by a config map.</p>
+
+<p>Create a config map with the the Spring Boot configuration content using the PostgreSQL database 
+credentials:</p>
+
+<pre><code class="language-shell">$ cat &lt;&lt;EOF &gt; ./application.properties
+spring.datasource.url=jdbc:postgresql://catalog-postgresql:5432/catalog
+spring.datasource.username=catalog
+spring.datasource.password=catalog
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=create
+EOF
+</code></pre>
+
+<blockquote>
+  <p>The hostname defined for the PostgreSQL connection-url corresponds to the PostgreSQL 
+service name published on OpenShift. This name will be resolved by the internal DNS server 
+exposed by OpenShift and accessible to containers running on OpenShift.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ oc create configmap catalog --from-file=./application.properties
+</code></pre>
+
+<blockquote>
+  <p>You can use the OpenShift Web Console to create config maps by clicking on <strong>Resources&nbsp;» Config Maps</strong> 
+on the left sidebar inside the your project. Click on <strong>Create Config Map</strong> button to create a config map 
+with the following info:</p>
+
+  <ul>
+    <li>Name: <code>catalog</code></li>
+    <li>Key: <code>application.properties</code></li>
+    <li>Value: <em>copy-paste the content of the above application.properties excluding the first and last lines (the lines that contain EOF)</em></li>
+  </ul>
+</blockquote>
+
+<p>The <a href="https://github.com/spring-cloud-incubator/spring-cloud-kubernetes">Spring Cloud Kubernetes</a> plug-in implements 
+the integration between Kubernetes and Spring Boot and is already added as a dependency to the Catalog Maven 
+project. Using this dependency, Spring Boot would search for a config map (by default with the same name as 
+the application) to use as the source of application configurations during application bootstrapping and 
+if enabled, triggers hot reloading of beans or Spring context when changes are detected on the config map.</p>
+
+<p>Although Spring Cloud Kubernetes tries to discover config maps, due to security reasons containers 
+by default are not allowed to snoop around OpenShift clusters and discover objects. Security comes first, 
+and discovery is a privilege that needs to be granted to containers in each project.</p>
+
+<p>Since you do want Spring Boot to discover the config maps inside the <code>coolstore-XX</code> project, you 
+need to grant permission to the Spring Boot service account to access the OpenShift REST API and find the 
+config maps. However you have done this already in previous labs and no need to grant permission again.</p>
+
+<blockquote>
+  <p>For the record, you can grant permission to the default service account in your project using this 
+command:</p>
+
+  <pre><code>$ oc policy add-role-to-user view -n coolstore-XX -z default
+</code></pre>
+</blockquote>
+
+<p>Delete the Catalog container to make it start again and look for the config maps:</p>
+
+<pre><code class="language-shell">$ oc delete pod -l deploymentconfig=catalog
+</code></pre>
+
+<p>When the Catalog container is ready, verify that the PostgreSQL database is being 
+used. Check the Catalog pod logs:</p>
+
+<pre><code class="language-shell">$ oc logs dc/catalog | grep hibernate.dialect
+
+2017-08-10 21:07:51.670  INFO 1 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL94Dialect
+</code></pre>
+
+<p>You can also connect to the Catalog PostgreSQL database and verify that the seed data is loaded:</p>
+
+<pre><code class="language-shell">$ oc rsh dc/catalog-postgresql
+</code></pre>
+
+<p>Once connected to the PostgreSQL container, run the following:</p>
+
+<blockquote>
+  <p>Run this command inside the Catalog PostgreSQL container, after opening a remote shell to it.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ psql -U catalog -c "select item_id, name, price from product"
+
+ item_id |            name             | price
+----------------------------------------------
+ 329299  | Red Fedora                  | 34.99
+ 329199  | Forge Laptop Sticker        |   8.5
+ 165613  | Solid Performance Polo      |  17.8
+ 165614  | Ogio Caliber Polo           | 28.75
+ 165954  | 16 oz. Vortex Tumbler       |     6
+ 444434  | Pebble Smart Watch          |    24
+ 444435  | Oculus Rift                 |   106
+ 444436  | Lytro Camera                |  44.3
+(8 rows)
+
+$ exit
+</code></pre>
+
+<h4 id="sensitive-configuration-data">Sensitive Configuration Data</h4>
+
+<p>Config maps are a superb mechanism for externalizing application configuration while keeping 
+containers independent of in which environment or on what container platform they are running. 
+Nevertheless, due to their clear-text nature, they are not suitable for sensitive data like 
+database credentials, SSH certificates, etc. In the current lab, we used config maps for database 
+credentials to simplify the steps; however, for production environments, you should opt for a more 
+secure way to handle sensitive data.</p>
+
+<p>Fortunately, OpenShift already provides a secure mechanism for handling sensitive data which is 
+called <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/secrets.html">Secrets</a>. Secret objects act and are used 
+similarly to config maps however with the difference that they are encrypted as they travel over the wire 
+and also at rest when kept on a persistent disk. Like config maps, secrets can be injected into 
+containers as environment variables or files on the filesystem using a temporary file-storage 
+facility (tmpfs).</p>
+
+<p>You won’t create any secrets in this lab; however, you have already created two secrets when you created 
+the PostgreSQL databases for Inventory and Catalog services. The PostgreSQL template by default stores 
+the database credentials in a secret in the project in which it’s being created:</p>
+
+<pre><code class="language-shell">$ oc describe secret catalog-postgresql
+
+Name:            catalog-postgresql
+Namespace:       coolstore
+Labels:          app=catalog
+                 template=postgresql-persistent-template
+Annotations:     openshift.io/generated-by=OpenShiftNewApp
+                 template.openshift.io/expose-database_name={.data['database-name']}
+                 template.openshift.io/expose-password={.data['database-password']}
+                 template.openshift.io/expose-username={.data['database-user']}
+
+Type:     Opaque
+
+Data
+====
+database-name:        7 bytes
+database-password:    7 bytes
+database-user:        7 bytes
+</code></pre>
+
+<p>This secret has two encrypted properties defined as <code>database-user</code> and <code>database-password</code> which hold 
+the PostgreSQL username and password values. These values are injected in the PostgreSQL container as 
+environment variables and used to initialize the database.</p>
+
+<p>Go to the <strong>coolstore-XX</strong> in the OpenShift Web Console and click on the <code>catalog-postgresql</code> 
+deployment (blue text under the title <strong>Deployment</strong>) and then on the <strong>Environment</strong>. Notice the values 
+from the secret are defined as env vars on the deployment:</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/config-psql-secret.png" alt="Secrets as Env Vars" width="900px"></p>
+
+<p>That’s all for this lab! You are ready to move on to the next lab.</p>
+
+        <hr>
+        <h2>Continuous Delivery</h2>
+        <h2 id="automating-deployments-using-pipelines">Automating Deployments Using Pipelines</h2>
+
+<p>In this lab you will learn about deployment pipelines and you will create a pipeline to 
+automate build and deployment of the Inventory service.</p>
+
+<h4 id="continuous-delivery">Continuous Delivery</h4>
+<p>So far you have been building and deploying each service manually to OpenShift. Although 
+it’s convenient for local development, it’s an error-prone way of delivering software if 
+extended to test and production environments.</p>
+
+<p>Continuous Delivery (CD) refers to a set of practices with the intention of automating 
+various aspects of delivery software. One of these practices is called delivery pipeline 
+which is an automated process to define the steps a change in code or configuration has 
+to go through in order to reach upper environments and eventually to production.</p>
+
+<p>OpenShift simplifies building CI/CD Pipelines by integrating
+the popular <a href="https://jenkins.io/doc/book/pipeline/overview/">Jenkins pipelines</a> into
+the platform and enables defining truly complex workflows directly from within OpenShift.</p>
+
+<p>The first step for any deployment pipeline is to store all code and configurations in 
+a source code repository.</p>
+
+<h4 id="create-a-git-repository-for-inventory">Create a Git Repository for Inventory</h4>
+
+<p>You can use any Git server (e.g. GitHub, BitBucket, etc) for this lab but we have prepared a 
+Gogs git server which you can access here:</p>
+
+<p><a href="http://gogs-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com/">http://gogs-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com</a></p>
+
+<p>Click on <strong>Register</strong> to register a new user with the following details and then click on 
+<strong>Create New Account</strong>:</p>
+
+<ul>
+  <li>Username: <em>same as your OpenShift user</em></li>
+  <li>Email: <em>your email</em>  (Don’t worry! Gogs won’t send you any emails)</li>
+  <li>Password: <code>openshift</code></li>
+</ul>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-signup.png" alt="Sign Up Gogs" width="900px"></p>
+
+<p>You will be redirected to the sign in page. Sign in using the above username and password.</p>
+
+<p>Click on the plus icon on the top navigation bar and then on <strong>New Repository</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-plus-icon.png" alt="Create New Repository" width="900px"></p>
+
+<p>Give <code>inventory-wildfly-swarm</code> as <strong>Repository Name</strong> and click on <strong>Create Repository</strong> 
+button, leaving the rest with default values.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-new-repo.png" alt="Create New Repository" width="700px"></p>
+
+<p>The Git repository is created now.</p>
+
+<p>Click on the copy-to-clipboard icon to near the 
+HTTP Git url to copy it to the clipboard which you will need in a few minutes.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-empty-repo.png" alt="Empty Repository" width="900px"></p>
+
+<h4 id="push-inventory-code-to-the-git-repository">Push Inventory Code to the Git Repository</h4>
+
+<p>Now that you have a Git repository for the Inventory service, you should push the 
+source code into this Git repository.</p>
+
+<p>Go the <code>inventory-wildfly-swarm</code> folder, initialize it as a Git working copy and add 
+the GitHub repository as the remote repository for your working copy.</p>
+
+<blockquote>
+  <p>Replace <code>GIT-REPO-URL</code> with the Git repository url copied in the previous steps</p>
+</blockquote>
+
+<pre><code class="language-shell">$ cd /projects/labs/inventory-wildfly-swarm
+$ git init
+$ git remote add origin GIT-REPO-URL
+</code></pre>
+
+<p>Before you commit the source code to the Git repository, configure your name and 
+email so that the commit owner can be seen on the repository. If you want, you can 
+replace the name and the email with your own in the following commands:</p>
+
+<pre><code class="language-shell">git config --global user.name "Developer"
+git config --global user.email "developer@me.com"
+</code></pre>
+
+<p>Commit and push the existing code to the GitHub repository.</p>
+
+<pre><code class="language-shell">$ git add . --all
+$ git commit -m "initial add"
+$ git push -u origin master
+</code></pre>
+
+<p>Enter your Git repository username and password if you get asked to enter your credentials. Go 
+to your <code>inventory-wildfly-swarm</code> repository web interface and refresh the page. You should 
+see the project files in the repository.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-inventory-repo.png" alt="Inventory Repository" width="900px"></p>
+
+<h4 id="define-the-deployment-pipeline">Define the Deployment Pipeline</h4>
+
+<p>OpenShift has built-in support for CI/CD pipelines by allowing developers to define 
+a <a href="https://jenkins.io/solutions/pipeline/">Jenkins pipeline</a> for execution by a Jenkins 
+automation engine, which is automatically provisioned on-demand by OpenShift when needed.</p>
+
+<p>The build can get started, monitored, and managed by OpenShift in 
+the same way as any other build types e.g. S2I. Pipeline workflows are defined in 
+a Jenkinsfile, either embedded directly in the build configuration, or supplied in 
+a Git repository and referenced by the build configuration.</p>
+
+<p>Jenkinsfile is a text file that contains the definition of a Jenkins Pipeline 
+and is created using a <a href="https://jenkins.io/doc/book/pipeline/syntax/">scripted or declarative syntax</a>.</p>
+
+<p>In the project explorer in Eclipse Che, right-click on <code>inventory-wildfly-swarm</code> project and then 
+on <strong>New &gt; File</strong> and name it <code>Jenkinsfile</code>.</p>
+
+<p>Copy the following pipeline definition into <code>Jenkinsfile</code>.</p>
+
+<pre><code class="language-shell">pipeline {
+  agent {
+      label 'maven'
+  }
+  stages {
+    stage('Build JAR') {
+      steps {
+        sh "mvn package"
+        stash name:"jar", includes:"target/inventory-1.0-SNAPSHOT-swarm.jar"
+      }
+    }
+    stage('Build Image') {
+      steps {
+        unstash name:"jar"
+        script {
+          openshift.withCluster() {
+            openshift.startBuild("inventory-s2i", "--from-file=target/inventory-1.0-SNAPSHOT-swarm.jar", "--wait")
+          }
+        }
+      }
+    }
+    stage('Deploy') {
+      steps {
+        script {
+          openshift.withCluster() {
+            def dc = openshift.selector("dc", "inventory")
+            dc.rollout().latest()
+            dc.rollout().status()
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>This pipeline has three stages:</p>
+
+<ul>
+  <li><em>Build JAR</em>: to build and test the jar file using Maven</li>
+  <li><em>Build Image</em>: to build a container image from the Inventory JAR archive using OpenShift S2I</li>
+  <li><em>Deploy</em>: to deploy the Inventory container image in the current project</li>
+</ul>
+
+<p>Note that the pipeline definition is fully integrated with OpenShift and you can 
+perform operations like image build, image deploy, etc directly from within the <code>Jenkinsfile</code>.</p>
+
+<p>When building deployment pipelines, it’s important to treat your <a href="https://martinfowler.com/bliki/InfrastructureAsCode.html">infrastructure and everything else that needs to be configured (including the pipeline definition) as code</a> 
+and store them in a source repository for version control.</p>
+
+<p>Commit and push the <code>Jenkinsfile</code> to the Git repository.</p>
+
+<pre><code class="language-shell">$ git add Jenkinsfile
+$ git commit -m "pipeline added"
+$ git push origin master
+</code></pre>
+
+<p>The pipeline definition is ready and now you can create a deployment pipeline using 
+this <code>Jenkinsfile</code>.</p>
+
+<h4 id="create-an-openshift-pipeline">Create an OpenShift Pipeline</h4>
+
+<p>Like mentioned, <a href="https://docs.openshift.com/container-platform/3.11/architecture/core_concepts/builds_and_image_streams.html#pipeline-build">OpenShift Pipelines</a> enable creating deployment pipelines using the widely popular <code>Jenkinsfile</code> format.</p>
+
+<p>OpenShift automates deployments using <a href="https://docs.openshift.com/container-platform/3.11/dev_guide/deployments/basic_deployment_operations.html#triggers">deployment triggers</a> that react to changes to the container image or configuration. Since you want to control the deployments instead 
+from the pipeline, you should remove the Inventory deploy triggers so that building a new 
+Inventory container image wouldn’t automatically result in a new deployment. That would 
+allow the pipeline to decide when a deployment should occur.</p>
+
+<p>Remove the Inventory deployment triggers:</p>
+
+<pre><code class="language-shell">$ oc set triggers dc/inventory --manual
+</code></pre>
+
+<p>Deploy a Jenkins server using the provided template and container image that 
+comes out-of-the-box with OpenShift:</p>
+
+<pre><code class="language-shell">oc new-app jenkins-ephemeral
+</code></pre>
+
+<p>After Jenkins is deployed and is running (verify in web console), then create a 
+deployment pipeline by running the following command within the <code>inventory-widlfly-swarm</code> folder:</p>
+
+<pre><code class="language-shell">$ oc new-app . --name=inventory-pipeline --strategy=pipeline
+</code></pre>
+
+<p>The above command creates a new build config of type pipeline which is automatically 
+configured to fetch the <code>Jenkinsfile</code> from the Git repository of the current folder 
+(<code>inventory-wildfly-swarm</code> Git repository) and execute it on Jenkins.</p>
+
+<p>Go to the OpenShift Web Console inside the <strong>coolstore-XX</strong> project and from the left sidebar 
+click on <strong>Builds&nbsp;» Pipelines</strong></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-pipeline-inprogress.png" alt="OpenShift Pipeline" width="900px"></p>
+
+<p>Pipeline syntax allows creating complex deployment scenarios with the possibility of defining 
+checkpoint for manual interaction and approval process using 
+<a href="https://jenkins.io/doc/pipeline/steps/">the large set of steps and plugins that Jenkins provide</a> in 
+order to adapt the pipeline to the process used in your team. You can see a few examples of 
+advanced pipelines in the 
+<a href="https://github.com/openshift/origin/tree/master/examples/jenkins/pipeline">OpenShift GitHub Repository</a>.</p>
+
+<p>In order to update the deployment pipeline, all you need to do is to update the <code>Jenkinsfile</code> 
+in the <code>inventory-wildfly-swarm</code> Git repository. OpenShift pipeline automatically executes the 
+updated pipeline next time it runs.</p>
+
+<h4 id="run-the-pipeline-on-every-code-change">Run the Pipeline on Every Code Change</h4>
+
+<p>Manually triggering the deployment pipeline to run is useful but the real goal is to be able 
+to build and deploy every change in code or configuration at least to lower environments 
+(e.g. dev and test) and ideally all the way to production with some manual approvals in-place.</p>
+
+<p>In order to automate triggering the pipeline, you can define a webhook on your Git repository 
+to notify OpenShift on every commit that is made to the Git repository and trigger a pipeline 
+execution.</p>
+
+<p>You can get see the webhook links in the OpenShift Web Console by going to <strong>Build&nbsp;» Pipelines</strong>, clicking 
+on the pipeline and going to the <strong>Configuration</strong> tab.</p>
+
+<p>Copy the Generic webhook url which you will need in the next steps.</p>
+
+<p>Go to Gogs and your <strong>inventory-wildfly-swarm</strong> Git repository, then click on <strong>Settings</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-settings-link.png" alt="Repository Settings" width="900px"></p>
+
+<p>On the left menu, click on <strong>Webhooks</strong> and then on <strong>Add Webhook</strong> button and then <strong>Gogs</strong>.</p>
+
+<p>Create a webhook with the following details:</p>
+
+<ul>
+  <li><strong>Payload URL</strong>: paste the Generic webhook url you copied from the <code>inventory-pipeline</code></li>
+  <li><strong>Content type</strong>: <code>application/json</code></li>
+</ul>
+
+<p>Click on <strong>Add Webhook</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/cd-gogs-webhook-add.png" alt="Repository Webhook" width="660px"></p>
+
+<p>All done. You can click on the newly defined webhook to see the list of <em>Recent Delivery</em>. 
+Clicking on the <strong>Test Delivery</strong> button allows you to manually trigger the webhook for 
+testing purposes. Click on it and verify that the <code>inventory-pipeline</code> starts running 
+immediately.</p>
+
+<p>Well done! You are ready for the next lab.</p>
+
+        <hr>
+        <h2>Debugging Applications</h2>
+        <h2 id="debugging-applications">Debugging Applications</h2>
+
+<p>In this lab you will debug the CoolStore application using Java remote debugging and 
+look into line-by-line code execution as the code runs inside a container on OpenShift.</p>
+
+<h4 id="investigate-the-bug">Investigate The Bug</h4>
+
+<p>CoolStore application seems to have a bug that causes the inventory status for one of the 
+products not to be displayed in the web interface.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-coolstore-bug.png" alt="Inventory Status Bug" width="800px"></p>
+
+<p>This is not an expected behavior! In previous labs, you added a circuit breaker to 
+protect the CoolStore application from failures and in case the Inventory API is not 
+available, to skip it and show the products without the inventory status. However, right 
+now the inventory status is available for all products but one which is not how we 
+expect to see the products.</p>
+
+<p>Since the product list is provided by the API Gateway, take a look into the API Gateway 
+logs to see if there are any errors:</p>
+
+<pre><code class="language-shell">$ oc logs dc/gateway | grep -i error
+
+...
+WARNING: Inventory error for 444436: status code 204
+SEVERE: Inventory error for 444436: null
+...
+</code></pre>
+
+<p>Oh! Something seems to be wrong with the response the API Gateway has received from the 
+Inventory API for the product id <code>444436</code>.</p>
+
+<p>Look into the Inventory pod logs to investigate further and see if you can find more<br>
+information about this bug:</p>
+
+<pre><code class="language-shell">$ oc logs dc/inventory | grep ERROR
+</code></pre>
+
+<p>There doesn’t seem to be anything relevant to the <code>invalid response</code> error that the 
+API Gateway received either!</p>
+
+<p>Invoke the Inventory API using <code>curl</code> for the suspect product id to see what actually 
+happens when API Gateway makes this call:</p>
+
+<blockquote>
+  <p>You can find out the Inventory route url using <code>oc get route inventory</code>. Replace 
+<code>INVENTORY-ROUTE-HOST</code> with the Inventory route url from your project.</p>
+</blockquote>
+
+<pre><code class="language-shell">$ curl http://INVENTORY-ROUTE-HOST/api/inventory/444436
+</code></pre>
+
+<blockquote>
+  <p>You can use <code>curl -v</code> to see all the headers sent and received. You would received 
+a <code>HTTP/1.1 204 No Content</code> response for the above request.</p>
+</blockquote>
+
+<p>No response came back and that seems to be the reason the inventory status is not displayed 
+on the web interface.</p>
+
+<p>Let’s debug the Inventory service to get to the bottom of this!</p>
+
+<h4 id="enable-remote-debugging">Enable Remote Debugging</h4>
+
+<p>Remote debugging is a useful debugging technique for application development which allows 
+looking into the code that is being executed somewhere else on a different machine and 
+execute the code line-by-line to help investigate bugs and issues. Remote debugging is 
+part of  Java SE standard debugging architecture which you can learn more about it in <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jpda/architecture.html">Java SE docs</a>.</p>
+
+<p>The Java image on OpenShift has built-in support for remote debugging and it can be enabled 
+by setting the <code>JAVA_DEBUG=true</code> environment variables on the deployment config for the pod 
+that you want to remotely debug.</p>
+
+<p>An easier approach would be to use the fabric8 maven plugin to enable remote debugging on 
+the Inventory pod. It also forwards the default remote debugging port, 5005, from the 
+Inventory pod to your workstation so simplify connectivity.</p>
+
+<p>Enable remote debugging on Inventory by running the following inside the <code>/projects/labs/inventory-wildfly-swarm</code> 
+directory in the Eclipse Che <strong>Terminal</strong> window:</p>
+
+<pre><code class="language-shell">$ mvn fabric8:debug
+</code></pre>
+
+<blockquote>
+  <p>The default port for remoting debugging is <code>5005</code> but you can change the default port 
+via environment variables. Read more in the <a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_middleware_for_openshift/3/html/red_hat_java_s2i_for_openshift/reference#configuration_environment_variables">Java S2I Image docs</a>.</p>
+</blockquote>
+
+<p>You are all set now to start debugging using the tools of you choice.</p>
+
+<p>Do not wait for the command to return! The fabric8 maven plugin keeps the forwarded 
+port open so that you can start debugging remotely.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-fabric8.png" alt="Fabric8 Debug" width="900px"></p>
+
+<h4 id="remote-debug-with-eclipse-che">Remote Debug with Eclipse Che</h4>
+
+<p>Eclipse Che provides a convenient way to remotely connect to Java applications running 
+inside containers and debug while following the code execution in the IDE.</p>
+
+<p>From the <strong>Run</strong> menu, click on <strong>Edit Debug Configurations…</strong>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-debug-config-1.png" alt="Remote Debug" width="600px"></p>
+
+<p>The window shows the debuggers available in Eclipse Che. Click on the plus sign near the 
+Java debugger.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-debug-config-2.png" alt="Remote Debug" width="700px"></p>
+
+<p>Configure the remote debugger and click on the <strong>Save</strong> button:</p>
+
+<ul>
+  <li>Check <strong>Connect to process on workspace machine</strong></li>
+  <li>Port: <code>5005</code></li>
+</ul>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-debug-config-3.png" alt="Remote Debug" width="700px"></p>
+
+<p>You can now click on the <strong>Debug</strong> button to make Eclipse Che connect to the 
+Inventory service running on OpenShift.</p>
+
+<p>You should see a confirmation that the remote debugger is successfully connected.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-debug-config-4.png" alt="Remote Debug" width="360px"></p>
+
+<p>Open <code>com.redhat.cloudnative.inventory.InventoryResource</code> and double-click 
+on the editor sidebar on the line number of the first line of the <code>getAvailability()</code> 
+method to add a breakpoint to that line. A start appears near the line to show a breakpoint 
+is set.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-breakpoint.png" alt="Add Breakpoint" width="600px"></p>
+
+<p>Open a new <strong>Terminal</strong> window and use <code>curl</code> to invoke the Inventory API with the 
+suspect product id in order to pause the code execution at the defined breakpoint.</p>
+
+<p>Note that you can use the the following icons to switch between debug and terminal windows.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-window-guide.png" alt="Icons" width="700px"></p>
+
+<blockquote>
+  <p>You can find out the Inventory route url using <code>oc get routes</code>. Replace 
+<code>INVENTORY-ROUTE-HOST</code> with the Inventory route url from your project.</p>
+</blockquote>
+
+<pre><code>$ curl -v http://INVENTORY-ROUTE-HOST/api/inventory/444436
+</code></pre>
+
+<p>Switch back to the debug panel and notice that the code execution is paused at the 
+breakpoint on <code>InventoryResource</code> class.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-breakpoint-stop.png" alt="Icons" width="900px"></p>
+
+<p>Click on the <em>Step Over</em> icon to execute one line and retrieve the inventory object for the 
+given product id from the database.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-step-over.png" alt="Step Over" width="340px"></p>
+
+<p>Click on the the plus icon in the <strong>Variables</strong> panel to add the <code>inventory</code> variable 
+to the list of watch variables. This would allow you to see the value of <code>inventory</code> variable 
+during execution.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-variables.png" alt="Watch Variables" width="500px"></p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-che-breakpoint-values.png" alt="Debug" width="900px"></p>
+
+<p>Can you spot the bug now?</p>
+
+<p>Look at the <strong>Variables</strong> window. The retrieved inventory object is <code>null</code>!</p>
+
+<p>The non-existing product id is not a problem on its own because it simply could mean 
+this product is discontinued and removed from the Inventory database but it’s not 
+removed from the product catalog database yet. The bug is however caused because 
+the code returns this <code>null</code> value instead of a sensible REST response. If the product 
+id does not exist, a proper JSON response stating a zero inventory should be 
+returned instead of <code>null</code>.</p>
+
+<p>Click on the <em>Resume</em> icon to continue the code execution and then on the stop icon to 
+end the debug session.</p>
+
+<h4 id="fix-the-inventory-bug">Fix the Inventory Bug</h4>
+
+<p>Edit the <code>InventoryResource.java</code> and update the <code>getAvailability()</code> to make it look like the following 
+code in order to return a zero inventory for products that don’t exist in the inventory 
+database:</p>
+
+<pre><code class="language-java">@GET
+@Path("/api/inventory/{itemId}")
+@Produces(MediaType.APPLICATION_JSON)
+public Inventory getAvailability(@PathParam("itemId") String itemId) {
+    Inventory inventory = em.find(Inventory.class, itemId);
+
+    if (inventory == null) {
+        inventory = new Inventory();
+        inventory.setItemId(itemId);
+        inventory.setQuantity(0);
+    }
+
+    return inventory;
+}
+</code></pre>
+
+<p>Go back to the <strong>Terminal</strong> window where <code>fabric8:debug</code> was running. Press 
+<code>Ctrl+C</code> to stop the debug and port-forward and then run the following commands 
+to commit the changes to the Git repository.</p>
+
+<pre><code class="language-shell">$ git add src/main/java/com/redhat/cloudnative/inventory/InventoryResource.java
+$ git commit -m "inventory returns zero for non-existing product id" 
+$ git push origin master
+</code></pre>
+
+<p>As soon as you commit the changes to the Git repository, the <code>inventory-pipeline</code> gets 
+triggered to build and deploy a new Inventory container with the fix. Go to the 
+OpenShift Web Console and inside the <strong>coolstore-XX</strong> project. On the sidebar 
+menu, Click on <strong>Builds&nbsp;» Pipelines</strong> to see its progress.</p>
+
+<p>When the pipeline completes successfully, point your browser at the Web route and verify 
+that the inventory status is visible for all products. The suspect product should show 
+the inventory status as <em>Not in Stock</em>.</p>
+
+<p><img src="./OpenShift Cloud-Native Workshop-complete_files/debug-coolstore-bug-fixed.png" alt="Inventory Status Bug Fixed" width="800px"></p>
+
+<p>Well done and congratulations for completing all the labs.</p>
+
+        <hr>
+        <h2>Appendix: Lab Env Info</h2>
+        <h2 id="appendix-environment-info">Appendix: Environment Info</h2>
+
+<p>You find all urls, hostnames, usernames and passwords that are needed during the 
+labs in this page. Note that the urls are also embedded inside each lab instructions.</p>
+
+<p><strong>OPENSHIFT</strong></p>
+
+<p>https://master.devoteam-1e6a.openshiftworkshop.com/</p>
+
+<p><strong>GIT SERVER</strong></p>
+
+<p>http://gogs-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com</p>
+
+<p><strong>NEXUS MAVEN REPOSITORY</strong></p>
+
+<p>http://nexus-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com</p>
+
+<p><strong>ECLIPSE CHE IDE</strong></p>
+
+<p>Register an account on Eclipse Che using an email address.</p>
+
+<p>http://che-lab-infra.apps.devoteam-1e6a.openshiftworkshop.com</p>
+
+<p><strong>OPENSHIFT DOCS</strong></p>
+
+<p>https://docs.openshift.com/container-platform/3.11</p>
+
+        <hr>
+    </div>
+  </div>
+</main>
+
+
+
+</body></html>
